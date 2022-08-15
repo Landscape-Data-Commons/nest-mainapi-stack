@@ -6,7 +6,7 @@ Documented by swagger (this-apis-domain.com/api-docs)
 
 ## For Development:
 
-As the ```sh npm run dev:watch``` is very slow inside a container (with a bind mount), dev work is worked outside of the containerized setup. 
+As the ``` npm run dev:watch``` is very slow inside a container (with a bind mount), dev work is worked outside of the containerized setup. 
 
 so: 
 ```sh
