@@ -1,26 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { CreateDatalpiDto } from './dto/create-datalpi.dto';
-import { UpdateDatalpiDto } from './dto/update-datalpi.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { dataLPI } from '@prisma/client';
 
 @Injectable()
 export class DatalpiService {
-  create(createDatalpiDto: CreateDatalpiDto) {
-    return 'This action adds a new datalpi';
-  }
+  constructor(public prisma: PrismaService) {}
 
-  findAll() {
-    return `This action returns all datalpi`;
-  }
+  FindManyLPI(params: {}): Promise<dataLPI[] | null>{
 
-  findOne(id: number) {
-    return `This action returns a #${id} datalpi`;
-  }
-
-  update(id: number, updateDatalpiDto: UpdateDatalpiDto) {
-    return `This action updates a #${id} datalpi`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} datalpi`;
+    return this.prisma.dataLPI.findMany({
+      where: { ...params },
+    });
   }
 }

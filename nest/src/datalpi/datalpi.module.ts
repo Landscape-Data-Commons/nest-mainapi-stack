@@ -6,6 +6,6 @@ import { PrismaModule } from '../prisma/prisma.module';
 @Module({
   controllers: [DatalpiController],
   providers: [DatalpiService],
-  imports: [PrismaModule]
+  imports: [PrismaModule],
 })
 export class DatalpiModule {}

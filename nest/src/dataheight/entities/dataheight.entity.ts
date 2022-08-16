@@ -60,7 +60,7 @@ export class DataheightEnt implements dataHeight {
   Measure: number;
 
   @ApiProperty()
-  LineLengthAmount: bigint;
+  LineLengthAmount: number;
 
   @ApiProperty()
   SpacingIntervalAmount: string;

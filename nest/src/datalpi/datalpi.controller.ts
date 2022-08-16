@@ -1,34 +1,24 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { ApiOkResponse } from '@nestjs/swagger';
+
+import { CustomRequestObjHandler } from '../CustomRequest.decorator';
 import { DatalpiService } from './datalpi.service';
-import { CreateDatalpiDto } from './dto/create-datalpi.dto';
-import { UpdateDatalpiDto } from './dto/update-datalpi.dto';
+import { dtoDataLPI } from './dto/get-datalpi.dto';
+import { DatalpiEnt } from './entities/datalpi.entity';
 
 @Controller('datalpi')
 export class DatalpiController {
   constructor(private readonly datalpiService: DatalpiService) {}
 
-  @Post()
-  create(@Body() createDatalpiDto: CreateDatalpiDto) {
-    return this.datalpiService.create(createDatalpiDto);
-  }
-
   @Get()
-  findAll() {
-    return this.datalpiService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.datalpiService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDatalpiDto: UpdateDatalpiDto) {
-    return this.datalpiService.update(+id, updateDatalpiDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.datalpiService.remove(+id);
+  @ApiOkResponse({ type: DatalpiEnt, isArray: true })
+  GetLPI(
+    @CustomRequestObjHandler(dtoDataLPI) ValidatedParams?: dtoDataLPI) {
+    for (const [key, value] of Object.entries(ValidatedParams)) {
+      if (Array.isArray(value)) {
+        ValidatedParams[key] = { in: value };
+      }
+    }
+    return this.datalpiService.FindManyLPI(ValidatedParams);
   }
 }

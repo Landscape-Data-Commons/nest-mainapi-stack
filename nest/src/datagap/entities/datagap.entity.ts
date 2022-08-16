@@ -19,7 +19,7 @@ export class DatagapEnt implements dataGap {
   RecType: string;
 
   @ApiProperty()
-  SeqNo: bigint;
+  SeqNo: number;
 
   @ApiProperty()
   GapStart: number;
