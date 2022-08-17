@@ -1,26 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { CreateDatasoilstabilityDto } from './dto/create-datasoilstability.dto';
-import { UpdateDatasoilstabilityDto } from './dto/update-datasoilstability.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { dataSoilStability } from '@prisma/client';
 
 @Injectable()
 export class DatasoilstabilityService {
-  create(createDatasoilstabilityDto: CreateDatasoilstabilityDto) {
-    return 'This action adds a new datasoilstability';
-  }
+  constructor(public prisma: PrismaService) {}
 
-  findAll() {
-    return `This action returns all datasoilstability`;
-  }
+  FindManySoilStability(params: {}): Promise<dataSoilStability[] | null>{
 
-  findOne(id: number) {
-    return `This action returns a #${id} datasoilstability`;
-  }
-
-  update(id: number, updateDatasoilstabilityDto: UpdateDatasoilstabilityDto) {
-    return `This action updates a #${id} datasoilstability`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} datasoilstability`;
+    return this.prisma.dataSoilStability.findMany({
+      where: { ...params },
+    });
   }
 }

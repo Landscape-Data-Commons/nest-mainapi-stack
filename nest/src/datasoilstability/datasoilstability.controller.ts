@@ -1,34 +1,24 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { ApiOkResponse } from '@nestjs/swagger';
+
+import { CustomRequestObjHandler } from '../CustomRequest.decorator';
 import { DatasoilstabilityService } from './datasoilstability.service';
-import { CreateDatasoilstabilityDto } from './dto/create-datasoilstability.dto';
-import { UpdateDatasoilstabilityDto } from './dto/update-datasoilstability.dto';
+import { dtoDataSoilStability } from './dto/get-datasoilstability.dto';
+import { DatasoilstabilityEnt } from './entities/datasoilstability.entity';
 
 @Controller('datasoilstability')
 export class DatasoilstabilityController {
   constructor(private readonly datasoilstabilityService: DatasoilstabilityService) {}
 
-  @Post()
-  create(@Body() createDatasoilstabilityDto: CreateDatasoilstabilityDto) {
-    return this.datasoilstabilityService.create(createDatasoilstabilityDto);
-  }
-
   @Get()
-  findAll() {
-    return this.datasoilstabilityService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.datasoilstabilityService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDatasoilstabilityDto: UpdateDatasoilstabilityDto) {
-    return this.datasoilstabilityService.update(+id, updateDatasoilstabilityDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.datasoilstabilityService.remove(+id);
+  @ApiOkResponse({ type: DatasoilstabilityEnt, isArray: true })
+  GetSoilStability(
+    @CustomRequestObjHandler(dtoDataSoilStability) ValidatedParams?: dtoDataSoilStability){
+    for (const [key, value] of Object.entries(ValidatedParams)) {
+      if (Array.isArray(value)) {
+        ValidatedParams[key] = { in: value };
+      }
+    }
+    return this.datasoilstabilityService.FindManySoilStability(ValidatedParams);
   }
 }

@@ -12,14 +12,14 @@ import { GeospeciesModule } from './geospecies/geospecies.module';
 
 @Module({
   imports: [
-    DatagapModule, 
-    PrismaModule, 
+    DatagapModule,
+    PrismaModule,
     DataheaderModule,
     DataheightModule,
     DatalpiModule,
     DatasoilstabilityModule,
     DataspeciesinventoryModule,
-    GeospeciesModule
+    GeospeciesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
