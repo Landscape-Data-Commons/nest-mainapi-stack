@@ -1,26 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { CreateDataspeciesinventoryDto } from './dto/create-dataspeciesinventory.dto';
-import { UpdateDataspeciesinventoryDto } from './dto/update-dataspeciesinventory.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { dataSpeciesInventory } from '@prisma/client';
 
 @Injectable()
 export class DataspeciesinventoryService {
-  create(createDataspeciesinventoryDto: CreateDataspeciesinventoryDto) {
-    return 'This action adds a new dataspeciesinventory';
-  }
+  constructor(public prisma: PrismaService) {}
 
-  findAll() {
-    return `This action returns all dataspeciesinventory`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} dataspeciesinventory`;
-  }
-
-  update(id: number, updateDataspeciesinventoryDto: UpdateDataspeciesinventoryDto) {
-    return `This action updates a #${id} dataspeciesinventory`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} dataspeciesinventory`;
+  FindManySpeciesInventory(params: {}): Promise<dataSpeciesInventory[] | null>{
+    return this.prisma.dataSpeciesInventory.findMany({
+      where: { ...params },
+    });
   }
 }

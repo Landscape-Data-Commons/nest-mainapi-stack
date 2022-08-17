@@ -9,6 +9,7 @@ import { DatalpiModule } from './datalpi/datalpi.module';
 import { DataspeciesinventoryModule } from './dataspeciesinventory/dataspeciesinventory.module';
 import { DatasoilstabilityModule } from './datasoilstability/datasoilstability.module';
 import { GeospeciesModule } from './geospecies/geospecies.module';
+import { GeoindicatorsModule } from './geoindicators/geoindicators.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { GeospeciesModule } from './geospecies/geospecies.module';
     DatalpiModule,
     DatasoilstabilityModule,
     DataspeciesinventoryModule,
+    GeoindicatorsModule,
     GeospeciesModule,
   ],
   controllers: [AppController],

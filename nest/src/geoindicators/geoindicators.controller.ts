@@ -1,34 +1,24 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { ApiOkResponse } from '@nestjs/swagger';
+
+import { CustomRequestObjHandler } from '../CustomRequest.decorator';
 import { GeoindicatorsService } from './geoindicators.service';
-import { CreateGeoindicatorDto } from './dto/create-geoindicator.dto';
-import { UpdateGeoindicatorDto } from './dto/update-geoindicator.dto';
+import { dtoGeoIndicators } from './dto/get-geoindicators.dto';
+import { GeoindicatorEnt } from './entities/geoindicator.entity';
 
 @Controller('geoindicators')
 export class GeoindicatorsController {
   constructor(private readonly geoindicatorsService: GeoindicatorsService) {}
 
-  @Post()
-  create(@Body() createGeoindicatorDto: CreateGeoindicatorDto) {
-    return this.geoindicatorsService.create(createGeoindicatorDto);
-  }
-
   @Get()
-  findAll() {
-    return this.geoindicatorsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.geoindicatorsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateGeoindicatorDto: UpdateGeoindicatorDto) {
-    return this.geoindicatorsService.update(+id, updateGeoindicatorDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.geoindicatorsService.remove(+id);
+  @ApiOkResponse({ type: GeoindicatorEnt, isArray: true})
+  GetGeoIndicators(
+    @CustomRequestObjHandler(dtoGeoIndicators) ValidatedParams?: dtoGeoIndicators){
+    for (const [key, value] of Object.entries(ValidatedParams)) {
+      if (Array.isArray(value)) {
+        ValidatedParams[key] = { in: value };
+      }
+    }
+    return this.geoindicatorsService.FindManyGeoIndicators(ValidatedParams);
   }
 }

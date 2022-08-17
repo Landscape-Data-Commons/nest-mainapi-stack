@@ -1,26 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { CreateGeoindicatorDto } from './dto/create-geoindicator.dto';
-import { UpdateGeoindicatorDto } from './dto/update-geoindicator.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { geoIndicators } from '@prisma/client';
 
 @Injectable()
 export class GeoindicatorsService {
-  create(createGeoindicatorDto: CreateGeoindicatorDto) {
-    return 'This action adds a new geoindicator';
-  }
+  constructor(public prisma: PrismaService) {}
 
-  findAll() {
-    return `This action returns all geoindicators`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} geoindicator`;
-  }
-
-  update(id: number, updateGeoindicatorDto: UpdateGeoindicatorDto) {
-    return `This action updates a #${id} geoindicator`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} geoindicator`;
+  FindManyGeoIndicators(params: {}): Promise<geoIndicators[] | null>{
+    return this.prisma.geoIndicators.findMany({
+      where: { ...params },
+    });
   }
 }
