@@ -1,34 +1,25 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { ApiOkResponse } from '@nestjs/swagger';
+
+import { CustomRequestObjHandler } from '../CustomRequest.decorator';
 import { GeospeciesService } from './geospecies.service';
-import { CreateGeospecyDto } from './dto/create-geospecy.dto';
-import { UpdateGeospecyDto } from './dto/update-geospecy.dto';
+import { dtoGeoSpecies } from './dto/get-geospecies.dto';
+import { GeospeciesEnt } from './entities/geospecy.entity';
+
 
 @Controller('geospecies')
 export class GeospeciesController {
   constructor(private readonly geospeciesService: GeospeciesService) {}
 
-  @Post()
-  create(@Body() createGeospecyDto: CreateGeospecyDto) {
-    return this.geospeciesService.create(createGeospecyDto);
-  }
-
   @Get()
-  findAll() {
-    return this.geospeciesService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.geospeciesService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateGeospecyDto: UpdateGeospecyDto) {
-    return this.geospeciesService.update(+id, updateGeospecyDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.geospeciesService.remove(+id);
+  @ApiOkResponse({ type: GeospeciesEnt, isArray: true })
+  GetGeoSpecies(
+    @CustomRequestObjHandler(dtoGeoSpecies) ValidatedParams?: dtoGeoSpecies){
+    for (const [key, value] of Object.entries(ValidatedParams)) {
+      if (Array.isArray(value)) {
+        ValidatedParams[key] = { in: value };
+      }
+    }
+    return this.geospeciesService.FindManyGeoSpecies(ValidatedParams);
   }
 }

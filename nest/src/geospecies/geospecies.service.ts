@@ -1,26 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { CreateGeospecyDto } from './dto/create-geospecy.dto';
-import { UpdateGeospecyDto } from './dto/update-geospecy.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { geoSpecies } from '@prisma/client';
 
 @Injectable()
 export class GeospeciesService {
-  create(createGeospecyDto: CreateGeospecyDto) {
-    return 'This action adds a new geospecy';
-  }
+  constructor(public prisma: PrismaService) {}
 
-  findAll() {
-    return `This action returns all geospecies`;
-  }
+  FindManyGeoSpecies(params: {}): Promise<geoSpecies[] | null>{
 
-  findOne(id: number) {
-    return `This action returns a #${id} geospecy`;
-  }
-
-  update(id: number, updateGeospecyDto: UpdateGeospecyDto) {
-    return `This action updates a #${id} geospecy`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} geospecy`;
+    return this.prisma.geoSpecies.findMany({
+      where: { ...params },
+    });
   }
 }

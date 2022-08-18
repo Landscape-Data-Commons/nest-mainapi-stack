@@ -11,7 +11,7 @@ export class GeoindicatorsController {
   constructor(private readonly geoindicatorsService: GeoindicatorsService) {}
 
   @Get()
-  @ApiOkResponse({ type: GeoindicatorEnt, isArray: true})
+  @ApiOkResponse({ type: GeoindicatorEnt, isArray: true })
   GetGeoIndicators(
     @CustomRequestObjHandler(dtoGeoIndicators) ValidatedParams?: dtoGeoIndicators){
     for (const [key, value] of Object.entries(ValidatedParams)) {
