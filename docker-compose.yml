@@ -3,44 +3,46 @@ services:
   nest:
   
     # image: landscapedatacommons/nest_api:1.0.0
+    image: nestapi
     build:
       context: .
-      dockerfile: ./nest-test/node.Dockerfile
-      target: development
-
+      dockerfile: ./nest/node.Dockerfile
     # container_name: nest
-    ports:
-      - 3002:3000
+    # ports:
+    #   - 3000:3000
+    networks:
+      - traefik-public
     volumes:
-      - ./nest-test:/usr/src/app
-      # - ./nest-test/node_modules
-    command:  npm run start:dev
+      - /var/run/docker.sock:/var/run/docker.sock
+    #   - ./nest-test:/usr/src/app
+    #   # - ./nest-test/node_modules
+    # command:  npm run start:dev
     env_file:
-      - ./nest-test/.env
-    labels:
-      - traefik.enable=true # enable traefik
-      # - traefik.docker.network=traefik-public # put it in the same network as traefik
-      # - traefik.constraint-label=traefik-public # assign the same label as traefik so it can be discovered
-      - traefik.http.routers.shinyproxy.rule=Host(`localhost:3001`) # listen to port 80 for request to APP_DOMAIN (use together with the line below)
-      - traefik.http.routers.shinyproxy.entrypoints=http
-      - traefik.http.middlewares.shinyproxy.redirectscheme.scheme=https # redirect traffic to https
-      - traefik.http.middlewares.shinyproxy.redirectscheme.permanent=true # redirect traffic to https
-      - traefik.http.routers.shinyproxy-secured.rule=Host(`localhost:3001`) # listen to port 443 for request to APP_DOMAIN (use together with the line below)
-      - traefik.http.routers.shinyproxy-secured.entrypoints=https
-      - traefik.http.routers.shinyproxy-secured.tls.certresolver=le # use the Let's Encrypt certificate we set up earlier
-      - traefik.http.services.shinyproxy-secured.loadbalancer.server.port=3000 # ask Traefik to search for port 8080 of the shinyproxy service container
+      - ./nest/.env
+    deploy:
+      mode: replicated
+      replicas: 3
+      labels:
+        - traefik.enable=true # enable traefik
+        - traefik.docker.network=traefik-public # put it in the same network as traefik
+        - traefik.constraint-label=traefik-public # assign the same label as traefik so it can be discovered
+        - traefik.port=3000
+        - traefik.http.routers.nest.rule=Host(`node.test`) # listen to port 80 for request to APP_DOMAIN (use together with the line below)
+      # - traefik.http.routers.nest.entrypoints=http
+      # - traefik.http.middlewares.nest.redirectscheme.scheme=https # redirect traffic to https
+      # - traefik.http.middlewares.nest.redirectscheme.permanent=true # redirect traffic to https
+      # - traefik.http.routers.nest-secured.rule=PathPrefix(`/test`) # listen to port 443 for request to APP_DOMAIN (use together with the line below)
+      # - traefik.http.routers.nest-secured.entrypoints=https
+      # - traefik.http.routers.nest-secured.tls.certresolver=le # use the Let's Encrypt certificate we set up earlier
+      # - traefik.http.services.nest-secured.loadbalancer.server.port=3000 # ask Traefik to search for port 8080 of the shinyproxy service container
       # - traefik.http.services.shinyproxy-secured.loadbalancer.sticky=true
       # - traefik.http.services.shinyproxy-secured.loadbalancer.sticky.cookie.name=StickyCookie
 
  
-volumes:
-  # Create a volume to store the certificates, there is a constraint to make sure
-  # Traefik is always deployed to the same Docker node with the same volume containing
-  # the HTTPS certificates
-  traefik-public-certificates:
-# networks:
-#   # Use the previously created public network "traefik-public", shared with other
-#   # services that need to be publicly available via this Traefik
-#   traefik-public:
-#     external: true
+
+networks:
+  # Use the previously created public network "traefik-public", shared with other
+  # services that need to be publicly available via this Traefik
+  traefik-public:
+    external: true
 # volumes:

@@ -1,9 +1,12 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
 import { Transform, Type } from 'class-transformer';
 
 export class dtoGeoIndicators {
+  
   @Transform(({ value }) => value.trim().split(',').map(id=>Number(id)))
   rid: number;
+  
 
   @Transform(({ value }) => value.trim().split(',').map(id=>String(id)))
   PrimaryKey: string;
