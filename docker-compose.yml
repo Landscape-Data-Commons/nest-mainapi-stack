@@ -9,9 +9,9 @@ services:
       dockerfile: ./nest/node.Dockerfile
     # container_name: nest
     # ports:
-    #   - 3000:3000
-    networks:
-      - traefik-public
+    #   - 3000
+    # networks:
+    #   - traefik-public
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     #   - ./nest-test:/usr/src/app
@@ -19,15 +19,16 @@ services:
     # command:  npm run start:dev
     env_file:
       - ./nest/.env
-    deploy:
-      mode: replicated
-      replicas: 3
-      labels:
-        - traefik.enable=true # enable traefik
-        - traefik.docker.network=traefik-public # put it in the same network as traefik
-        - traefik.constraint-label=traefik-public # assign the same label as traefik so it can be discovered
-        - traefik.port=3000
-        - traefik.http.routers.nest.rule=Host(`node.test`) # listen to port 80 for request to APP_DOMAIN (use together with the line below)
+    # deploy:
+    #   mode: replicated
+    #   replicas: 3
+    labels:
+      # - traefik.enable=true # enable traefik
+      # - traefik.docker.network=traefik-public # put it in the same network as traefik
+      # - traefik.constraint-label=traefik-public # assign the same label as traefik so it can be discovered
+      # - traefik.port=3000
+      - traefik.http.routers.nest.rule=Path(`/node`) # listen to port 80 for request to APP_DOMAIN (use together with the line below)
+      - traefik.http.services.nest-service.loadbalancer.server.port=8080
       # - traefik.http.routers.nest.entrypoints=http
       # - traefik.http.middlewares.nest.redirectscheme.scheme=https # redirect traffic to https
       # - traefik.http.middlewares.nest.redirectscheme.permanent=true # redirect traffic to https
@@ -40,9 +41,6 @@ services:
 
  
 
-networks:
-  # Use the previously created public network "traefik-public", shared with other
-  # services that need to be publicly available via this Traefik
-  traefik-public:
-    external: true
-# volumes:
+# networks:
+#   traefik-public:
+#     external: true
