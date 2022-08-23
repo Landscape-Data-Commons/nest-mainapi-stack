@@ -7,40 +7,23 @@ services:
     build:
       context: .
       dockerfile: ./nest/node.Dockerfile
-    # container_name: nest
-    # ports:
-    #   - 3000
-    # networks:
-    #   - traefik-public
+    networks:
+      - proxy
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    #   - ./nest-test:/usr/src/app
-    #   # - ./nest-test/node_modules
-    # command:  npm run start:dev
     env_file:
       - ./nest/.env
     # deploy:
     #   mode: replicated
     #   replicas: 3
     labels:
-      # - traefik.enable=true # enable traefik
-      # - traefik.docker.network=traefik-public # put it in the same network as traefik
-      # - traefik.constraint-label=traefik-public # assign the same label as traefik so it can be discovered
-      # - traefik.port=3000
-      - traefik.http.routers.nest.rule=Path(`/node`) # listen to port 80 for request to APP_DOMAIN (use together with the line below)
-      - traefik.http.services.nest-service.loadbalancer.server.port=8080
-      # - traefik.http.routers.nest.entrypoints=http
-      # - traefik.http.middlewares.nest.redirectscheme.scheme=https # redirect traffic to https
-      # - traefik.http.middlewares.nest.redirectscheme.permanent=true # redirect traffic to https
-      # - traefik.http.routers.nest-secured.rule=PathPrefix(`/test`) # listen to port 443 for request to APP_DOMAIN (use together with the line below)
-      # - traefik.http.routers.nest-secured.entrypoints=https
-      # - traefik.http.routers.nest-secured.tls.certresolver=le # use the Let's Encrypt certificate we set up earlier
-      # - traefik.http.services.nest-secured.loadbalancer.server.port=3000 # ask Traefik to search for port 8080 of the shinyproxy service container
-      # - traefik.http.services.shinyproxy-secured.loadbalancer.sticky=true
-      # - traefik.http.services.shinyproxy-secured.loadbalancer.sticky.cookie.name=StickyCookie
+      - traefik.enable=true # enable traefik
+      - traefik.docker.network=proxy # put it in the same network as traefik
+      - traefik.http.routers.nest.entrypoints=web # entrypoint chosen on traefik
+      - traefik.http.routers.nest.rule=Host(`n.localhost`) # choose any domain
+      - traefik.http.routers.nest.service=nest # give the proxied service a name
+      - traefik.http.services.nest.loadbalancer.server.port=3000 # loadbalance on this internal port
 
- 
-
-# networks:
-#   traefik-public:
-#     external: true
+networks:
+  proxy:
+    external: true
