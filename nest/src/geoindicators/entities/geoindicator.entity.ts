@@ -23,10 +23,10 @@ export class GeoindicatorEnt implements geoIndicators {
   @ApiProperty()
   PercentCoveredByEcoSite: number;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   Latitude_NAD83: Prisma.Decimal;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   Longitude_NAD83: Prisma.Decimal;
 
   @ApiProperty()
