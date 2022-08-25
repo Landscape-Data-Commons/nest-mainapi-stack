@@ -3,6 +3,9 @@ import { Transform, Type } from 'class-transformer';
 
 export class dtoDataGap {
   @Transform(({ value }) => value.trim().split(',').map(id=>Number(id)))
+  public take?: number;
+
+  @Transform(({ value }) => value.trim().split(',').map(id=>Number(id)))
   public rid: number;
 
   @Transform(({ value }) => value.trim().split(',').map(id=>String(id)))

@@ -1,7 +1,12 @@
-import { dataGap } from '@prisma/client';
-import { ApiProperty } from '@nestjs/swagger';
+import { dataGap, Prisma } from '@prisma/client';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 
 export class DatagapEnt implements dataGap {
+  @ApiHideProperty()
+  take?: number;
+
+  @ApiHideProperty()
+  cursor?: Prisma.dataGapWhereUniqueInput;
 
   @ApiProperty({
     type: Number,

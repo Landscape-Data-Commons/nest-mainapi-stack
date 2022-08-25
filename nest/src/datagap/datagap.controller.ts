@@ -21,14 +21,14 @@ export class DatagapController {
   // })
   
   GetGap(
-    @Query() GapQueries: DatagapEnt,
+    @Query() GapQueries?: DatagapEnt,
     @CustomRequestObjHandler(dtoDataGap) ValidatedParams?: DatagapEnt,
     ) {
     // prisma requires an additional "in" when filtering
     // an array of values in the request.query param
-    console.log(GapQueries)
+    // const {take, cursor} = GapQueries;
     for (const [key, value] of Object.entries(ValidatedParams)) {
-      if (Array.isArray(value)) {
+      if (Array.isArray(value) && key!="take") {
         ValidatedParams[key] = { in: value };
       }
     }
