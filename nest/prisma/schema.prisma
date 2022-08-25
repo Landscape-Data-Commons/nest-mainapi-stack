@@ -60,8 +60,10 @@ model dataHeader {
   DateLoadedInDb          DateTime?                @db.Date
   wkb_geometry            Unsupported("geometry")?
   source                  String?
+  dataDustDeposition      dataDustDeposition[]
   dataGap                 dataGap[]
   dataHeight              dataHeight[]
+  dataHorizontalFlux      dataHorizontalFlux[]
   dataLPI                 dataLPI[]
   dataSoilStability       dataSoilStability[]
   dataSpeciesInventory    dataSpeciesInventory[]
@@ -343,4 +345,84 @@ model tblProject {
   addit_contact_email       String?
   bibliographical_reference String?
   data_doi                  String?
+}
+
+model dataDustDeposition {
+  rid                    Int         @id @default(autoincrement())
+  StackID                String?
+  ProjectKey             String?
+  DateEstablished        DateTime?   @db.Date
+  Location               String?
+  Notes                  String?
+  ItemType               String?
+  trapOpeningArea        Float?      @db.Real
+  GPSCoordSys            String?
+  Datum                  String?
+  Zone                   String?
+  Easting                Float?      @db.Real
+  Northing               Float?      @db.Real
+  Longitude              Float?      @db.Real
+  Latitude               Float?      @db.Real
+  RecKey                 String?
+  collectDate            DateTime?   @db.Date
+  Collector              String?
+  labTech                String?
+  breakerNbr             String?
+  emptyWeight            Float?      @db.Real
+  recordedWeight         Float?      @db.Real
+  sedimentWeight         Float?      @db.Real
+  daysExposed            Int?
+  sedimentGprDay         Float?      @db.Real
+  sedimentArchived       String?     @db.Bit(1)
+  sedimentGperDayByInlet Float?      @db.Real
+  SeqNo                  Int?
+  SampleCompromised      String?     @db.Bit(1)
+  PrimaryKey             String?
+  DateLoadedInDB         DateTime?   @db.Date
+  DBKey                  String?
+  dataHeader             dataHeader? @relation(fields: [PrimaryKey], references: [PrimaryKey], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model dataHorizontalFlux {
+  rid                    Int         @id @default(autoincrement())
+  BoxID                  String?
+  StackID                String?
+  Height                 Float?      @db.Real
+  DateEstablished        DateTime?   @db.Timestamp(6)
+  Description            String?
+  openingSize            String?
+  processMethod          String?
+  ovenTemp               Int?
+  BoxType                Int?
+  azimuth                String?
+  SamplerType            String?
+  InletArea              Float?      @db.Real
+  ProjectKey             String?
+  Location               String?
+  ItemType               String?
+  trapOpeningArea        String?
+  GPSCoordSys            String?
+  Datum                  String?
+  Zone                   String?
+  Easting                Float?
+  Northing               Float?
+  Longitude              Float?
+  Latitude               Float?
+  RecKey                 String?
+  collectDate            DateTime?   @db.Date
+  beakerNbr              String?
+  emptyWeight            Float?      @db.Real
+  recordedWeight         Float?      @db.Real
+  sedimentWeight         Float?      @db.Real
+  daysExposed            Int?
+  sedimentGperDay        Float?      @db.Real
+  sedimentArchived       String?     @db.Bit(1)
+  Notes                  String?
+  sedimentGperDayByInlet Float?      @db.Real
+  SeqNo                  Int?
+  SampleCompromised      String?     @db.Bit(1)
+  PrimaryKey             String?
+  DateLoadedInDB         DateTime?   @db.Date
+  DBKey                  String?
+  dataHeader             dataHeader? @relation(fields: [PrimaryKey], references: [PrimaryKey], onDelete: NoAction, onUpdate: NoAction)
 }

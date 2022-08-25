@@ -10,6 +10,8 @@ import { DataspeciesinventoryModule } from './dataspeciesinventory/dataspeciesin
 import { DatasoilstabilityModule } from './datasoilstability/datasoilstability.module';
 import { GeospeciesModule } from './geospecies/geospecies.module';
 import { GeoindicatorsModule } from './geoindicators/geoindicators.module';
+import { DatadustdepositionModule } from './datadustdeposition/datadustdeposition.module';
+import { DatahorizontalfluxModule } from './datahorizontalflux/datahorizontalflux.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { GeoindicatorsModule } from './geoindicators/geoindicators.module';
     DataspeciesinventoryModule,
     GeoindicatorsModule,
     GeospeciesModule,
+    DatadustdepositionModule,
+    DatahorizontalfluxModule,
   ],
   controllers: [AppController],
   providers: [AppService],

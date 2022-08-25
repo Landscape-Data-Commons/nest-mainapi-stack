@@ -1,0 +1,45 @@
+import { ApiProperty, ApiQuery } from '@nestjs/swagger';
+import { Transform, Type } from 'class-transformer';
+
+export class dtoDataHorizontalFlux {
+  rid: number;
+  BoxID: string;
+  StackID: string;
+  Height: number;
+  DateEstablished: Date;
+  Description: string;
+  openingSize: string;
+  processMethod: string;
+  ovenTemp: number;
+  BoxType: number;
+  azimuth: string;
+  SamplerType: string;
+  InletArea: number;
+  ProjectKey: string;
+  Location: string;
+  ItemType: string;
+  trapOpeningArea: string;
+  GPSCoordSys: string;
+  Datum: string;
+  Zone: string;
+  Easting: number;
+  Northing: number;
+  Longitude: number;
+  Latitude: number;
+  RecKey: string;
+  collectDate: Date;
+  beakerNbr: string;
+  emptyWeight: number;
+  recordedWeight: number;
+  sedimentWeight: number;
+  daysExposed: number;
+  sedimentGperDay: number;
+  sedimentArchived: string;
+  Notes: string;
+  sedimentGperDayByInlet: number;
+  SeqNo: number;
+  SampleCompromised: string;
+  PrimaryKey: string;
+  DateLoadedInDB: Date;
+  DBKey: string;
+}
