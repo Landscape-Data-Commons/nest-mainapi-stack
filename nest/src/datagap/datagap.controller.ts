@@ -28,7 +28,9 @@ export class DatagapController {
     // an array of values in the request.query param
     // const {take, cursor} = GapQueries;
     for (const [key, value] of Object.entries(ValidatedParams)) {
-      if (Array.isArray(value) && key!="take") {
+      // do NOT modify the take param! everything else can be considered
+      // an array of 1
+      if (Array.isArray(value) && key != 'take') {
         ValidatedParams[key] = { in: value };
       }
     }
