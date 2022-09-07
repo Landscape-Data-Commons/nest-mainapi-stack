@@ -17,5 +17,19 @@ npm run dev:watch
 
 ## For Production:
 
-** todo **
+1. create the external docker network that will host traefik, portainer and the node application (in this example, the network is called proxy):
 
+```sh
+docker network create --attachable --scope=swarm proxy
+```
+2. deploy the traefik stack (includes portainer):
+
+```sh
+docker stack deploy traefik --compose-file ./traefik/docker-compose.yml 
+```
+
+3. deploy the node application:
+
+```sh
+
+```
