@@ -10,7 +10,7 @@ services:
       # - --api.insecure=true      
       # - traefik.http.routers.traefik-public-https.middlewares=admin-auth
     ports:
-      - 80:80
+      - 9001:9001
       - 8080:8080
     deploy:
       placement:
@@ -49,7 +49,7 @@ services:
       - traefik.enable=true
       - traefik.docker.network=proxy
       - traefik.http.routers.portainer.entrypoints=web
-      - traefik.http.routers.portainer.rule=Host(`port.localhost`)
+      - traefik.http.routers.portainer.rule=Host(`port.localhost`) || Path(`/portainer`)
       - traefik.http.routers.portainer.service=portainer
       - traefik.http.services.portainer.loadbalancer.server.port=9000
 networks:

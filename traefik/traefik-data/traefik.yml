@@ -4,7 +4,7 @@ api:
 
 entryPoints:
   web:
-    address: :80
+    address: :9001
   traefik:
     address: :8080
     # http:
