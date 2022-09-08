@@ -13,14 +13,15 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     env_file:
       - ./nest/.env
+
     # deploy:
     #   mode: replicated
     #   replicas: 3
     labels:
       - traefik.enable=true # enable traefik
       - traefik.docker.network=proxy # put it in the same network as traefik
-      - traefik.http.routers.nest.entrypoints=web # entrypoint chosen on traefik
-      - traefik.http.routers.nest.rule=Host(`n.localhost`) # choose any domain
+      - traefik.http.routers.nest.entrypoints=web-secure # entrypoint chosen on traefik
+      - traefik.http.routers.nest.rule=Host(`napi.landscapedatacommons.org`) # choose any domain
       - traefik.http.routers.nest.service=nest # give the proxied service a name
       - traefik.http.services.nest.loadbalancer.server.port=3000 # loadbalance on this internal port
 

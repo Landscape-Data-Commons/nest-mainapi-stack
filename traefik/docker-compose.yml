@@ -10,7 +10,7 @@ services:
       # - --api.insecure=true      
       # - traefik.http.routers.traefik-public-https.middlewares=admin-auth
     ports:
-      - 9001:9001
+      - 80:80
       - 8080:8080
     deploy:
       placement:
@@ -20,18 +20,19 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik-data/traefik.yml:/traefik.yml:ro
       # - acme-store:/acme.json
-      # - ./traefik-data/configurations:/configurations
+      - ./traefik-data/configurations:/configurations
     networks:
       - proxy
     labels:
       - traefik.enable=true 
       - traefik.docker.network=proxy
-      - traefik.http.routers.traefik.entrypoints=web
-      # - traefik.http.routers.traefik.rule=Host(`traefik.landscapedatacommons.org`)
-      # - traefik.http.routers.traefik-secure.middlewares=user-auth@file
-      - traefik.http.routers.dashboard.entrypoints=traefik
+      - traefik.http.routers.traefik.entrypoints=web-secure
+      - traefik.http.routers.traefik.rule=Host(`dash.landscapedatacommons.org`)
+      - traefik.http.routers.traefik-secure.middlewares=user-auth@file
+      - traefik.http.routers.web-secure.tls.certresolver=letsencrypt
+      # - traefik.http.routers.dashboard.entrypoints=traefik
       - traefik.http.routers.dashboard.service=api@internal
-      - traefik.http.routers.traefik.service=api@internal
+      # - traefik.http.routers.traefik.service=api@internal
 
   portainer:
     image: portainer/portainer-ce:latest
@@ -48,8 +49,10 @@ services:
     labels:
       - traefik.enable=true
       - traefik.docker.network=proxy
-      - traefik.http.routers.portainer.entrypoints=web
-      - traefik.http.routers.portainer.rule=Host(`port.localhost`) || Path(`/portainer`)
+      - traefik.http.routers.portainer.entrypoints=web-secure
+      # - traefik.http.routers.web-secure.tls=true
+      - traefik.http.routers.web-secure.tls.certresolver=letsencrypt
+      - traefik.http.routers.portainer.rule=Host(`port.landscapedatacommons.org`)
       - traefik.http.routers.portainer.service=portainer
       - traefik.http.services.portainer.loadbalancer.server.port=9000
 networks:

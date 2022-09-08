@@ -1,39 +1,35 @@
 api:
   dashboard: true
-  insecure: true
+  # insecure: true
 
 entryPoints:
   web:
-    address: :9001
-  traefik:
-    address: :8080
-    # http:
-    #   redirections:
-    #     entryPoint:
-    #       to: websecure
+    address: :80
+
+  web-secure:
+    address: :443
+    http:
+      middlewares:
+        - secureHeaders@file
+      tls:
+        certResolver: letsencrypt
+
 log:
   level: DEBUG
-  # websecure:
-  #   address: :443
-  #   http:
-  #     middlewares:
-  #       - secureHeaders@file
-  #     tls:
-  #       certResolver: letsencrypt
 
 providers:
   docker:
     endpoint: "unix:///var/run/docker.sock"
     exposedByDefault: false
     network: proxy
-  # file:
-  #   filename: /configurations/dynamic.yml
+  file:
+    filename: /configurations/dynamic.yml
 
-# certificatesResolvers:
-#   letsencrypt:
-#     acme:
-#       email: bonefont.work@gmail.com
-#       storage: acme.json
-#       keyType: EC384
-#       httpChallenge:
-#         entryPoint: web
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: bonefont.work@gmail.com
+      storage: acme.json
+      keyType: EC384
+      httpChallenge:
+        entryPoint: web
