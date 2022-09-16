@@ -15,6 +15,11 @@ http:
           - "admin:$apr1$IzgFi9au$47QL1olhIhTlRVYB3wZmI1"
 
 tls:
+  certificates:
+    - certFile: /containertest/ssl/cert.pem 
+      keyFile: /containertest/ssl/privkey.pem
+    - certFile: /jornada/ssl/cert.pem
+      keyFile: /jornada/ssl/privkey.pem
   options:
     default:
       cipherSuites:
