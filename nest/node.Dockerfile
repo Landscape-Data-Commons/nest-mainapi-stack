@@ -1,4 +1,6 @@
-FROM node:18-alpine3.15 AS development
+# 16.17-alpine3.15
+# FROM node:18-alpine3.15 AS development
+FROM node:16.17-alpine3.15 AS development
 
 WORKDIR /usr/src/app
 
@@ -14,7 +16,8 @@ USER node
 # BUILD FOR PRODUCTION
 ###################
 
-FROM node:18-alpine3.15 As build
+# FROM node:18-alpine3.15 As build
+FROM node:16.17-alpine3.15 As build
 
 WORKDIR /usr/src/app
 
@@ -36,7 +39,8 @@ USER node
 # PRODUCTION
 ###################
 
-FROM node:18-alpine3.15 As production
+# FROM node:18-alpine3.15 As production
+FROM node:16.17-alpine3.15 As production
 
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist

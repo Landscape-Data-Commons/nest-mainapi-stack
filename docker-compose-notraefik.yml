@@ -1,0 +1,9 @@
+version: "3.3"
+services:
+  nest:
+    image: landscapedatacommons/nest_api:1.0.1
+    ports:
+      - '5016:3000'
+    env_file:
+      - ./nest/.env
+
