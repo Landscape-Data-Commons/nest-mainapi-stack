@@ -1,4 +1,4 @@
-# 16.17-alpine3.15
+# https://github.com/prisma/prisma/issues/10649
 # FROM node:18-alpine3.15 AS development
 FROM node:16.17-alpine3.15 AS development
 
