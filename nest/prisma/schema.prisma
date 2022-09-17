@@ -292,8 +292,8 @@ model geoIndicators {
   us_l3name                 String?                  @db.VarChar(100)
   us_l4name                 String?                  @db.VarChar(100)
   State                     String?
-  wkb_geometry              Unsupported("geometry")?
   modis_landcover           String?                  @db.VarChar(100)
+  wkb_geometry              Unsupported("geometry")?
   dataHeader                dataHeader?              @relation(fields: [PrimaryKey], references: [PrimaryKey], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([PrimaryKey, rid], map: "idx_geoind_rid_pk")
@@ -321,7 +321,7 @@ model geoSpecies {
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model modis_values {
-  index      Int?
+  index      BigInt?
   PrimaryKey String?
   Name       String?
 
@@ -422,7 +422,7 @@ model dataHorizontalFlux {
   SeqNo                  Int?
   SampleCompromised      String?     @db.Bit(1)
   PrimaryKey             String?
-  DateLoadedInDB         DateTime?   @db.Date
+  DateLoadedInDb         DateTime?   @db.Date
   DBKey                  String?
   dataHeader             dataHeader? @relation(fields: [PrimaryKey], references: [PrimaryKey], onDelete: NoAction, onUpdate: NoAction)
 }

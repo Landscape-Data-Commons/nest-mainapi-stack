@@ -1,7 +1,7 @@
 import { dataHorizontalFlux } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class Datahorizontalflux implements dataHorizontalFlux {
+export class DatahorizontalfluxEnt implements dataHorizontalFlux {
   @ApiProperty({
     type: Number,
     required: false,
@@ -276,7 +276,7 @@ export class Datahorizontalflux implements dataHorizontalFlux {
     // example: '2021-08-04',
     description: '',
   })
-  DateLoadedInDB: Date;
+  DateLoadedInDb: Date;
 
   @ApiProperty({
     type: String,

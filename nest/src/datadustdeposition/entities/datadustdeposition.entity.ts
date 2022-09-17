@@ -223,7 +223,7 @@ export class DatadustdepositionEnt implements dataDustDeposition {
     // example: '2021-08-04',
     description: 'Date that the data were uploaded into Landscape Data Commons (YYYY-MM-DD).',
   })
-  DateLoadedInDB: Date;
+  DateLoadedInDb: Date;
 
   @ApiProperty({
     type: String,
