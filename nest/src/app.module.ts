@@ -12,6 +12,7 @@ import { GeospeciesModule } from './geospecies/geospecies.module';
 import { GeoindicatorsModule } from './geoindicators/geoindicators.module';
 import { DatadustdepositionModule } from './datadustdeposition/datadustdeposition.module';
 import { DatahorizontalfluxModule } from './datahorizontalflux/datahorizontalflux.module';
+import { TblSchemaModule } from './tbl-schema/tbl-schema.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { DatahorizontalfluxModule } from './datahorizontalflux/datahorizontalflu
     GeospeciesModule,
     DatadustdepositionModule,
     DatahorizontalfluxModule,
+    TblSchemaModule,
   ],
   controllers: [AppController],
   providers: [AppService],

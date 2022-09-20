@@ -127,20 +127,6 @@ export class DatadustdepositionEnt implements dataDustDeposition {
   @ApiProperty({
     type: String,
     required: false,
-    description: 'Person who collected the sample.',
-  })
-  Collector: string;
-
-  @ApiProperty({
-    type: String,
-    required: false,
-    description: 'Person who performed the lab work.',
-  })
-  labTech: string;
-
-  @ApiProperty({
-    type: String,
-    required: false,
     description: 'Beaker ID.',
   })
   breakerNbr: string;

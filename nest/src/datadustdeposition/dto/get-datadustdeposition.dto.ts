@@ -55,12 +55,6 @@ export class dtoDataDustDeposition {
   collectDate: Date;
 
   @Transform(({ value }) => value.trim().split(',').map(id=>String(id)))
-  Collector: string;
-
-  @Transform(({ value }) => value.trim().split(',').map(id=>String(id)))
-  labTech: string;
-
-  @Transform(({ value }) => value.trim().split(',').map(id=>String(id)))
   breakerNbr: string;
 
   @Transform(({ value }) => value.trim().split(',').map(id=>Number(id)))

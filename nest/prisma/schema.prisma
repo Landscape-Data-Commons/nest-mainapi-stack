@@ -365,8 +365,6 @@ model dataDustDeposition {
   Latitude               Float?      @db.Real
   RecKey                 String?
   collectDate            DateTime?   @db.Date
-  Collector              String?
-  labTech                String?
   breakerNbr             String?
   emptyWeight            Float?      @db.Real
   recordedWeight         Float?      @db.Real
@@ -378,7 +376,7 @@ model dataDustDeposition {
   SeqNo                  Int?
   SampleCompromised      String?     @db.Bit(1)
   PrimaryKey             String?
-  DateLoadedInDB         DateTime?   @db.Date
+  DateLoadedInDb         DateTime?   @db.Date
   DBKey                  String?
   dataHeader             dataHeader? @relation(fields: [PrimaryKey], references: [PrimaryKey], onDelete: NoAction, onUpdate: NoAction)
 }
@@ -425,4 +423,17 @@ model dataHorizontalFlux {
   DateLoadedInDb         DateTime?   @db.Date
   DBKey                  String?
   dataHeader             dataHeader? @relation(fields: [PrimaryKey], references: [PrimaryKey], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model tblSchema {
+  rid           Int       @id @default(autoincrement())
+  Table         String?
+  Field         String?
+  Alias         String?
+  Description   String?
+  DataType      String?
+  Length        String?
+  DatatypeNotes String?
+  Version       String?
+  Uploaded      DateTime? @db.Date
 }

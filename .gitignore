@@ -40,3 +40,4 @@ lerna-debug.log*
 **/*.key
 **/*.pem
 **/*.db
+**/*.txt
