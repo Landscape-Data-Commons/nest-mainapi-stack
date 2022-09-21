@@ -16,15 +16,15 @@ export class TblSchemaService {
     return this.prisma.tblSchema.findMany();
   }
 
-  FindLatestSchema(): Promise<tblSchema[] | null> {
+  async FindLatestSchema(): Promise<tblSchema[] | null> {
+    const maxVersion = await this.prisma.tblSchema.aggregate({
+      _max: {
+        Version: true,
+      },
+    });
+    // return max
     return this.prisma.tblSchema.findMany({
-      orderBy: [
-        {
-          Version: 'desc',
-        },
-      ],
-      take: 448,
-      // where: {}
+      where: { Version: maxVersion._max.Version}
     });
   }
 }
