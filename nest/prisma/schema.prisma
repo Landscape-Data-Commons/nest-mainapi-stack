@@ -427,6 +427,7 @@ model dataHorizontalFlux {
 
 model tblSchema {
   rid           Int       @id @default(autoincrement())
+  Order         Decimal?  @db.Decimal
   Table         String?
   Field         String?
   Alias         String?
@@ -434,6 +435,10 @@ model tblSchema {
   DataType      String?
   Length        String?
   DatatypeNotes String?
+  Min           Decimal?  @db.Decimal
+  Max           Decimal?  @db.Decimal
+  Unit          String?
+  SigFig        Decimal?  @db.Decimal
   Version       String?
   Uploaded      DateTime? @db.Date
 }
