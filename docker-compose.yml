@@ -1,11 +1,13 @@
 version: "3.3"
 services:
   nest:
-    image: landscapedatacommons/nest_api:1.0.5
+    image: landscapedatacommons/nest_api:1.0.6
     # image: nestapi
     # build:
     #   context: .
     #   dockerfile: ./nest/node.Dockerfile
+    # volumes:
+    #   -
     ports:
       - "5016:3000"
 
