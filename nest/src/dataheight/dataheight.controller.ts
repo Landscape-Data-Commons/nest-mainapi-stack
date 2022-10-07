@@ -14,9 +14,9 @@ export class DataheightController {
   @ApiOkResponse({ type: DataheightEnt, isArray: true })
   GetHeight(
     @CustomRequestObjHandler(dtoDataHeight) ValidatedParams?: dtoDataHeight) {
-    for (const [key, value] of Object.entries(ValidatedParams)) {
+    for (const [key, value] of Object.entries(ValidatedParams['params'])) {
       if (Array.isArray(value)) {
-        ValidatedParams[key] = { in: value };
+        ValidatedParams['params'][key] = { in: value };
       }
     }
     return this.dataheightService.FindManyHeight(ValidatedParams);

@@ -18,9 +18,9 @@ export class DatahorizontalfluxController {
     @CustomRequestObjHandler(dtoDataHorizontalFlux) ValidatedParams?: DatahorizontalfluxEnt,
 
   ){
-    for (const [key, value] of Object.entries(ValidatedParams)) {
+    for (const [key, value] of Object.entries(ValidatedParams['params'])) {
       if (Array.isArray(value)) {
-        ValidatedParams[key] = { in: value };
+        ValidatedParams['params'][key] = { in: value };
       }
     }
     return this.datahorizontalfluxService.FindManyHorizontalFlux(ValidatedParams);
