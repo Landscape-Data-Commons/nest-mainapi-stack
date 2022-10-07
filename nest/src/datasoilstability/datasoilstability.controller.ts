@@ -14,9 +14,9 @@ export class DatasoilstabilityController {
   @ApiOkResponse({ type: DatasoilstabilityEnt, isArray: true })
   GetSoilStability(
     @CustomRequestObjHandler(dtoDataSoilStability) ValidatedParams?: dtoDataSoilStability){
-    for (const [key, value] of Object.entries(ValidatedParams)) {
+    for (const [key, value] of Object.entries(ValidatedParams['params'])) {
       if (Array.isArray(value)) {
-        ValidatedParams[key] = { in: value };
+        ValidatedParams['params'][key] = { in: value };
       }
     }
     return this.datasoilstabilityService.FindManySoilStability(ValidatedParams);
