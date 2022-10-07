@@ -13,15 +13,14 @@ export class DatagapController {
 
   @Get()
   @ApiOkResponse({ type: DatagapEnt, isArray: true })
-  
   GetGap(
     @Query() GapQueries?: DatagapEnt,
     @CustomRequestObjHandler(dtoDataGap) ValidatedParams?: DatagapEnt,
-    ) {
+  ) {
     // prisma requires an additional "in" when filtering
     // an array of values in the request.query param
     // const {take, cursor} = GapQueries;
-    
+
     for (const [key, value] of Object.entries(ValidatedParams['params'])) {
       // do NOT modify the take param! everything else can be considered
       // an array of 1

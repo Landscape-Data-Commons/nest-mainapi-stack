@@ -14,9 +14,9 @@ export class DataheaderController {
   @ApiOkResponse({ type: DataheaderEnt, isArray: true })
   GetHeader(
     @CustomRequestObjHandler(dtoDataHeader) ValidatedParams?: dtoDataHeader) {
-    for (const [key, value] of Object.entries(ValidatedParams)) {
+    for (const [key, value] of Object.entries(ValidatedParams['params'])) {
       if (Array.isArray(value)) {
-        ValidatedParams[key] = { in: value };
+        ValidatedParams['params'][key] = { in: value };
       }
     }
     return this.dataheaderService.FindManyHeader(ValidatedParams);
