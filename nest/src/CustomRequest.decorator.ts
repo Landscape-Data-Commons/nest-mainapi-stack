@@ -8,25 +8,32 @@ import {
 import { validate } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 
+export const LikeOperator = (obj) => {
+  const arrange = {};
+  for (const element of Object.keys(obj)) {
+    arrange[element] = { contains: obj[element] };
+  }
+  return arrange;
+};
+
 export const CustomRequestObjHandler = createParamDecorator(
   async (data: any, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
 
-    const dto:any = plainToInstance(data, request.query);
-    // parsing url params to find the custom likeoperator 
-    let likeFields = {}
-    if(
-      Object.keys(dto).some(element=>element.includes("Like")) ||
-      Object.keys(dto).some(element=>element.includes("like"))
-      ){
-      likeFields["wildcards"] = {}
-      likeFields["params"] = {}
+    const dto: any = plainToInstance(data, request.query);
+    // parsing url params to find the custom likeoperator
+    const likeFields = {};
+    if (
+      Object.keys(dto).some((element) => element.includes('Like')) ||
+      Object.keys(dto).some((element) => element.includes('like'))
+    ) {
+      likeFields['wildcards'] = {};
+      likeFields['params'] = {};
       // separating custom param from regular params
-      for(let key of Object.keys(dto)){
-        if(key.includes("like") || key.includes("Like")){
-
-          likeFields['wildcards'][key.split(/(like)/i)[0]] = dto[key]
-          delete dto[key] //removing from params
+      for (const key of Object.keys(dto)) {
+        if (key.includes('like') || key.includes('Like')) {
+          likeFields['wildcards'][key.split(/(like)/i)[0]] = dto[key];
+          delete dto[key]; //removing from params
         }
       }
     }
@@ -41,8 +48,8 @@ export const CustomRequestObjHandler = createParamDecorator(
         HttpStatus.BAD_REQUEST,
       );
     }
-    
-    likeFields["params"] = dto
+
+    likeFields['params'] = dto;
     return likeFields;
   },
 );
