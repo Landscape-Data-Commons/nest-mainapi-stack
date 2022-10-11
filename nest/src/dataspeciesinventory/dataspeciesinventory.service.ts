@@ -7,7 +7,7 @@ import { LikeOperator } from 'src/CustomRequest.decorator';
 export class DataspeciesinventoryService {
   constructor(public prisma: PrismaService) {}
 
-  FindManySpeciesInventory(params: {}): Promise<dataSpeciesInventory[] | null>{
+  FindManySpeciesInventory(params: {}): Promise<dataSpeciesInventory[] | null> {
     const { ...whereParams } = params['params'];
 
     if ('wildcards' in params) {

@@ -15,9 +15,9 @@ export class GeospeciesController {
   @ApiOkResponse({ type: GeospeciesEnt, isArray: true })
   GetGeoSpecies(
     @CustomRequestObjHandler(dtoGeoSpecies) ValidatedParams?: dtoGeoSpecies){
-    for (const [key, value] of Object.entries(ValidatedParams)) {
+    for (const [key, value] of Object.entries(ValidatedParams['params'])) {
       if (Array.isArray(value)) {
-        ValidatedParams[key] = { in: value };
+        ValidatedParams['params'][key] = { in: value };
       }
     }
     return this.geospeciesService.FindManyGeoSpecies(ValidatedParams);
