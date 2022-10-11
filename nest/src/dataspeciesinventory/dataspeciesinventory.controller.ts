@@ -14,9 +14,9 @@ export class DataspeciesinventoryController {
   @ApiOkResponse({ type: DataspeciesinventoryEnt, isArray: true })
   GetSpeciesInventory(
     @CustomRequestObjHandler(dtoDataSpeciesInventory) ValidatedParams?: dtoDataSpeciesInventory){
-    for (const [key, value] of Object.entries(ValidatedParams)) {
+    for (const [key, value] of Object.entries(ValidatedParams['params'])) {
       if (Array.isArray(value)) {
-        ValidatedParams[key] = { in: value };
+        ValidatedParams['params'][key] = { in: value };
       }
     }
     return this.dataspeciesinventoryService.FindManySpeciesInventory(ValidatedParams);

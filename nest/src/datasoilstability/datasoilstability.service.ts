@@ -15,7 +15,7 @@ export class DatasoilstabilityService {
       const wc = LikeOperator(wildcards);
 
       return this.prisma.dataSoilStability.findMany({
-        where: { ...whereParams, wc },
+        where: { ...whereParams, ...wc },
       });
     } else {
       return this.prisma.dataSoilStability.findMany({
