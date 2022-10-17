@@ -19,7 +19,7 @@ export class GeospeciesService {
       });
     } else {
       return this.prisma.geoSpecies.findMany({
-        where: { ...params },
+        where: { ...whereParams },
       });
     }
   }

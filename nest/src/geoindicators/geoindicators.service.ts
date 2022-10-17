@@ -19,7 +19,7 @@ export class GeoindicatorsService {
       });
     } else {
       return this.prisma.geoIndicators.findMany({
-        where: { ...params },
+        where: { ...whereParams },
       });
     }
   }
