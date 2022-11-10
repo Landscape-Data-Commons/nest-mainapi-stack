@@ -17,7 +17,7 @@ export class DatagapController {
     // pagination
     @Query('take') take?: string,
     @Query('cursor') cursor?: string,
-    @Query() GapQueries?: DatagapEnt,
+
     @CustomRequestObjHandler(dtoDataGap) ValidatedParams?: DatagapEnt,
   ) {
     if (take) {

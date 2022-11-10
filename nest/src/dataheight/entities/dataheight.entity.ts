@@ -1,7 +1,13 @@
 import { dataHeight } from '@prisma/client';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 
 export class DataheightEnt implements dataHeight {
+  @ApiHideProperty()
+  take?: number;
+
+  @ApiHideProperty()
+  cursor?: number;
+
   @ApiProperty({
     type: Number,
     required: false,
