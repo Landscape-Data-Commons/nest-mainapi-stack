@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 
 import { CustomRequestObjHandler } from '../CustomRequest.decorator';
@@ -13,9 +13,19 @@ export class DatasoilstabilityController {
   @Get()
   @ApiOkResponse({ type: DatasoilstabilityEnt, isArray: true })
   GetSoilStability(
+    // pagination
+    @Query('take') take?: string,
+    @Query('cursor') cursor?: string,
+
     @CustomRequestObjHandler(dtoDataSoilStability) ValidatedParams?: dtoDataSoilStability){
+    if (take) {
+      ValidatedParams['take'] = Number(take);
+    }
+    if (cursor) {
+      ValidatedParams['cursor'] = Number(cursor);
+    }
     for (const [key, value] of Object.entries(ValidatedParams['params'])) {
-      if (Array.isArray(value)) {
+      if (Array.isArray(value) && key != 'take' && key != 'cursor') {
         ValidatedParams['params'][key] = { in: value };
       }
     }
