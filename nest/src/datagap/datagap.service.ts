@@ -9,18 +9,55 @@ export class DatagapService {
 
   FindManyGap(params: any): Promise<dataGap[] | null> {
     const { ...whereParams } = params['params'];
+    // console.log(params)
+    const { take, cursor } = params;
 
     if ('wildcards' in params) {
       const { ...wildcards } = params['wildcards'];
       const wc = LikeOperator(wildcards);
-
-      return this.prisma.dataGap.findMany({
-        where: { ...whereParams, ...wc },
-      });
+      if (!isNaN(take) && !isNaN(cursor)) {
+        console.log('withlike: with take or cursor');
+        return this.prisma.dataGap.findMany({
+          where: { ...whereParams, ...wc },
+          skip: 1,
+          take,
+          cursor: {
+            rid: cursor,
+          },
+          orderBy: {
+            rid: 'asc',
+          },
+        });
+      } else {
+        console.log('withlike: no take or cursor');
+        return this.prisma.dataGap.findMany({
+          where: { ...whereParams, ...wc },
+        });
+      }
     } else {
-      return this.prisma.dataGap.findMany({
-        where: { ...whereParams },
-      });
+      if (!isNaN(take) && !isNaN(cursor)) {
+        console.log('nolike: with cursor');
+        return this.prisma.dataGap.findMany({
+          where: { ...whereParams },
+          skip: 1,
+          take,
+          cursor: {
+            rid: cursor,
+          },
+          orderBy: {
+            rid: 'asc',
+          },
+        });
+      } else {
+        console.log('nolike: no cursor');
+        return this.prisma.dataGap.findMany({
+          where: { ...whereParams },
+          take,
+          orderBy: {
+            rid: 'asc',
+          },
+        });
+      }
     }
   }
 }

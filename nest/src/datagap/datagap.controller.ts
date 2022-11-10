@@ -14,17 +14,25 @@ export class DatagapController {
   @Get()
   @ApiOkResponse({ type: DatagapEnt, isArray: true })
   GetGap(
+    // pagination
+    @Query('take') take?: string,
+    @Query('cursor') cursor?: string,
     @Query() GapQueries?: DatagapEnt,
     @CustomRequestObjHandler(dtoDataGap) ValidatedParams?: DatagapEnt,
   ) {
+    if (take) {
+      ValidatedParams['take'] = Number(take);
+    }
+    if (cursor) {
+      ValidatedParams['cursor'] = Number(cursor);
+    }
     // prisma requires an additional "in" when filtering
     // an array of values in the request.query param
     // const {take, cursor} = GapQueries;
-
     for (const [key, value] of Object.entries(ValidatedParams['params'])) {
       // do NOT modify the take param! everything else can be considered
       // an array of 1
-      if (Array.isArray(value) && key != 'take') {
+      if (Array.isArray(value) && key != 'take' && key != 'cursor') {
         ValidatedParams['params'][key] = { in: value };
       }
     }

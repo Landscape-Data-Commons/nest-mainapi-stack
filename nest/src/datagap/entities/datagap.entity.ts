@@ -6,7 +6,7 @@ export class DatagapEnt implements dataGap {
   take?: number;
 
   @ApiHideProperty()
-  cursor?: Prisma.dataGapWhereUniqueInput;
+  cursor?: number;
 
   @ApiProperty({
     type: Number,

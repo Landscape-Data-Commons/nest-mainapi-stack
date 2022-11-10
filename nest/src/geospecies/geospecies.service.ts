@@ -7,7 +7,7 @@ import { LikeOperator } from 'src/CustomRequest.decorator';
 export class GeospeciesService {
   constructor(public prisma: PrismaService) {}
 
-  FindManyGeoSpecies(params: {}): Promise<geoSpecies[] | null> {
+  FindManyGeoSpecies(params: any): Promise<geoSpecies[] | null> {
     const { ...whereParams } = params['params'];
 
     if ('wildcards' in params) {

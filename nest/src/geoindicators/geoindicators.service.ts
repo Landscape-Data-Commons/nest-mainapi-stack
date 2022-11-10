@@ -7,7 +7,7 @@ import { LikeOperator } from 'src/CustomRequest.decorator';
 export class GeoindicatorsService {
   constructor(public prisma: PrismaService) {}
 
-  FindManyGeoIndicators(params: {}): Promise<geoIndicators[] | null> {
+  FindManyGeoIndicators(params: any): Promise<geoIndicators[] | null> {
     const { ...whereParams } = params['params'];
 
     if ('wildcards' in params) {
