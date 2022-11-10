@@ -14,12 +14,20 @@ export class DatahorizontalfluxController {
   @ApiOkResponse({ type: DatahorizontalfluxEnt, isArray: true })
 
   GetHorizontalFlux(
-    @Query() HorzontalFluxQueries: DatahorizontalfluxEnt,
-    @CustomRequestObjHandler(dtoDataHorizontalFlux) ValidatedParams?: DatahorizontalfluxEnt,
+    // pagination
+    @Query('take') take?: string,
+    @Query('cursor') cursor?: string,
 
-  ){
+    @CustomRequestObjHandler(dtoDataHorizontalFlux) ValidatedParams?: DatahorizontalfluxEnt,
+  ) {
+    if (take) {
+      ValidatedParams['take'] = Number(take);
+    }
+    if (cursor) {
+      ValidatedParams['cursor'] = Number(cursor);
+    }
     for (const [key, value] of Object.entries(ValidatedParams['params'])) {
-      if (Array.isArray(value)) {
+      if (Array.isArray(value) && key != 'take' && key != 'cursor') {
         ValidatedParams['params'][key] = { in: value };
       }
     }

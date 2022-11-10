@@ -1,7 +1,13 @@
 import { dataHorizontalFlux } from '@prisma/client';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 
 export class DatahorizontalfluxEnt implements dataHorizontalFlux {
+  @ApiHideProperty()
+  take?: number;
+
+  @ApiHideProperty()
+  cursor?: number;
+  
   @ApiProperty({
     type: Number,
     required: false,

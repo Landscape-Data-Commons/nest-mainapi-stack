@@ -1,7 +1,15 @@
 import { ApiProperty, ApiQuery } from '@nestjs/swagger';
-import { Transform, Type } from 'class-transformer';
+import { Exclude, Transform, Type } from 'class-transformer';
 
 export class dtoDataHorizontalFlux {
+  @Exclude()
+  @Transform(({ value }) => value.trim().split(',').map(id=>Number(id)))
+  public take?: number;
+
+  @Exclude()
+  @Transform(({ value }) => value.trim().split(',').map(id=>Number(id)))
+  public cursor?: number;
+  
   @Transform(({ value }) => value.trim().split(',').map(id=>Number(id)))
   rid: number;
 
