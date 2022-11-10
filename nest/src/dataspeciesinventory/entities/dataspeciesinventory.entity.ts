@@ -1,7 +1,13 @@
 import { dataSpeciesInventory } from '@prisma/client';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 
 export class DataspeciesinventoryEnt implements dataSpeciesInventory {
+  @ApiHideProperty()
+  take?: number;
+
+  @ApiHideProperty()
+  cursor?: number;
+
   @ApiProperty()
   rid: number;
 
