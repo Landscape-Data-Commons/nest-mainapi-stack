@@ -94,7 +94,7 @@ model dataHeight {
   Direction             String?
   Measure               Int?
   LineLengthAmount      Int?
-  SpacingIntervalAmount String?
+  SpacingIntervalAmount Float?
   SpacingType           String?
   HeightOption          String?
   HeightUOM             String?

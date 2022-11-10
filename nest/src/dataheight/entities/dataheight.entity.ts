@@ -145,11 +145,11 @@ export class DataheightEnt implements dataHeight {
   LineLengthAmount: number;
 
   @ApiProperty({
-    type: String,
+    type: Number,
     required: false,
     description: '',
   })
-  SpacingIntervalAmount: string;
+  SpacingIntervalAmount: number;
 
   @ApiProperty({
     type: String,

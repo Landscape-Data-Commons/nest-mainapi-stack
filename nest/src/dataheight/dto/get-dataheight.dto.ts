@@ -61,8 +61,8 @@ export class dtoDataHeight {
   @Transform(({ value }) => value.trim().split(',').map(id=>Number(id)))
   LineLengthAmount: bigint;
 
-  @Transform(({ value }) => value.trim().split(',').map(id=>String(id)))
-  SpacingIntervalAmount: string;
+  @Transform(({ value }) => value.trim().split(',').map(id=>Number(id)))
+  SpacingIntervalAmount: number;
 
   @Transform(({ value }) => value.trim().split(',').map(id=>String(id)))
   SpacingType: string;
