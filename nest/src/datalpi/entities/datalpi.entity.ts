@@ -1,7 +1,13 @@
 import { dataLPI } from '@prisma/client';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 
 export class DatalpiEnt implements dataLPI {
+  @ApiHideProperty()
+  take?: number;
+
+  @ApiHideProperty()
+  cursor?: number;
+
   @ApiProperty({
     type: Number,
     required: false,

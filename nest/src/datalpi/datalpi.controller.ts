@@ -14,10 +14,21 @@ export class DatalpiController {
   @Get()
   @ApiOkResponse({ type: DatalpiEnt, isArray: true })
   GetLPI(
-    @Query() LPIQueries?: DatalpiEnt,
-    @CustomRequestObjHandler(dtoDataLPI) ValidatedParams?: dtoDataLPI) {
+    // pagination
+    @Query('take') take?: string,
+    @Query('cursor') cursor?: string,
+
+    @CustomRequestObjHandler(dtoDataLPI) ValidatedParams?: dtoDataLPI,
+  ) {
+    if (take) {
+      ValidatedParams['take'] = Number(take);
+    }
+    if (cursor) {
+      ValidatedParams['cursor'] = Number(cursor);
+    }
+
     for (const [key, value] of Object.entries(ValidatedParams['params'])) {
-      if (Array.isArray(value)) {
+      if (Array.isArray(value) && key != 'take' && key != 'cursor') {
         ValidatedParams['params'][key] = { in: value };
       }
     }
