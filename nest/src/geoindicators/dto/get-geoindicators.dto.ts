@@ -1,9 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
-import { Transform, Type } from 'class-transformer';
+import { Exclude, Transform, Type } from 'class-transformer';
 
 export class dtoGeoIndicators {
   
+  @Exclude()
+  @Transform(({ value }) => value.trim().split(',').map(id=>Number(id)))
+  public take?: number;
+
+  @Exclude()
+  @Transform(({ value }) => value.trim().split(',').map(id=>Number(id)))
+  public cursor?: number;
+
+
   @Transform(({ value }) => value.trim().split(',').map(id=>Number(id)))
   rid: number;
   

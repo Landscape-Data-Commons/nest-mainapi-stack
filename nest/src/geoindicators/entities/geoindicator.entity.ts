@@ -1,7 +1,14 @@
 import { geoIndicators, Prisma } from '@prisma/client';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 
 export class GeoindicatorEnt implements geoIndicators {
+
+  @ApiHideProperty()
+  take?: number;
+
+  @ApiHideProperty()
+  cursor?: number;
+
   @ApiProperty()
   rid: number;
 

@@ -11,10 +11,11 @@ export class DatagapService {
     const { ...whereParams } = params['params'];
     // console.log(params)
     const { take, cursor } = params;
-
+    
     if ('wildcards' in params) {
       const { ...wildcards } = params['wildcards'];
       const wc = LikeOperator(wildcards);
+      
       if (!isNaN(take) && !isNaN(cursor)) {
         console.log('withlike: with take or cursor');
         return this.prisma.dataGap.findMany({
@@ -32,6 +33,10 @@ export class DatagapService {
         console.log('withlike: no take or cursor');
         return this.prisma.dataGap.findMany({
           where: { ...whereParams, ...wc },
+          take,
+          orderBy: {
+            rid: 'asc',
+          },
         });
       }
     } else {
