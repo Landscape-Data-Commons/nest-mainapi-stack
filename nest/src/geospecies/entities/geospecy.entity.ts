@@ -1,7 +1,13 @@
 import { geoSpecies } from '@prisma/client';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 
 export class GeospeciesEnt implements geoSpecies {
+  @ApiHideProperty()
+  take?: number;
+
+  @ApiHideProperty()
+  cursor?: number;
+  
   @ApiProperty({
     type: Number,
     required: false,

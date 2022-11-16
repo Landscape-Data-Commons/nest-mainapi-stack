@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 
 import { CustomRequestObjHandler } from '../CustomRequest.decorator';
@@ -14,9 +14,20 @@ export class GeospeciesController {
   @Get()
   @ApiOkResponse({ type: GeospeciesEnt, isArray: true })
   GetGeoSpecies(
-    @CustomRequestObjHandler(dtoGeoSpecies) ValidatedParams?: dtoGeoSpecies){
+    // pagination
+    @Query('take') take?: string,
+    @Query('cursor') cursor?: string,
+
+    @CustomRequestObjHandler(dtoGeoSpecies) ValidatedParams?: dtoGeoSpecies)
+    {
+    if (take) {
+      ValidatedParams['take'] = Number(take);
+    }
+    if (cursor) {
+      ValidatedParams['cursor'] = Number(cursor);
+    }
     for (const [key, value] of Object.entries(ValidatedParams['params'])) {
-      if (Array.isArray(value)) {
+      if (Array.isArray(value) && key != 'take' && key != 'cursor') {
         ValidatedParams['params'][key] = { in: value };
       }
     }
