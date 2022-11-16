@@ -31,6 +31,10 @@ export class DatasoilstabilityService {
         console.log('withlike: no take or cursor');
         return this.prisma.dataSoilStability.findMany({
           where: { ...whereParams, ...wc },
+          take,
+          orderBy: {
+            rid: 'asc',
+          },
         });
       }
     } else {

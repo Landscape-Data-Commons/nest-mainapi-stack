@@ -31,6 +31,10 @@ export class DataheightService {
         console.log('withlike: no take or cursor');
         return this.prisma.dataHeight.findMany({
           where: { ...whereParams, ...wc },
+          take,
+          orderBy: {
+            rid: 'asc',
+          },
         });
       }
     } else {

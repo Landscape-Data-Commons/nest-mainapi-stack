@@ -31,6 +31,10 @@ export class DatalpiService {
         console.log('withlike: no take or cursor');
         return this.prisma.dataLPI.findMany({
           where: { ...whereParams, ...wc },
+          take,
+          orderBy: {
+            rid: 'asc',
+          },
         });
       }
     } else {

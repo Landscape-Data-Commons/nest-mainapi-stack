@@ -32,6 +32,10 @@ export class DatahorizontalfluxService {
         console.log('withlike: no take or cursor');
         return this.prisma.dataHorizontalFlux.findMany({
           where: { ...whereParams, ...wc },
+          take,
+          orderBy: {
+            rid: 'asc',
+          },
         });
       }
     } else {

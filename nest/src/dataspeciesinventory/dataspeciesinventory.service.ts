@@ -31,6 +31,10 @@ export class DataspeciesinventoryService {
         console.log('withlike: no take or cursor');
         return this.prisma.dataSpeciesInventory.findMany({
           where: { ...whereParams, ...wc },
+          take,
+          orderBy: {
+            rid: 'asc',
+          },
         });
       }
     } else {
