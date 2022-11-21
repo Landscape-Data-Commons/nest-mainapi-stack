@@ -50,4 +50,7 @@ export class dtoGeoSpecies {
   
   @Type(() => Date)
   DateLoadedInDb: Date;
+
+  @Type(() => Date)
+  DateVisited: Date;
 }

@@ -246,4 +246,12 @@ export class DatagapEnt implements dataGap {
     description: 'Source data format. Required for use of terradactyl',
   })
   source: string;
+
+  @ApiProperty({
+    type: Date,
+    required: false,
+    // example: '2021-08-04',
+    description: 'The date that data were collected at the plot.',
+  })
+  DateVisited: Date;
 }

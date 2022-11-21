@@ -145,4 +145,7 @@ export class DataspeciesinventoryEnt implements dataSpeciesInventory {
 
   @ApiProperty()
   DateLoadedInDb: Date;
+
+  @ApiProperty()
+  DateVisited: Date;
 }

@@ -77,4 +77,7 @@ export class dtoDataLPI {
 
   @Type(() => Date)
   DateLoadedInDb: Date;
+
+  @Type(() => Date)
+  DateVisited: Date;
 }

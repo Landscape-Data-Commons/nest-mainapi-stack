@@ -105,4 +105,7 @@ export class dtoDataGap {
 
   @Transform(({ value }) => value.trim().split(',').map(id=>String(id)))
   public source: string;
+
+  @Type(() => Date)
+  DateVisited: Date;
 }

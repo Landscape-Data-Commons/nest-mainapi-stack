@@ -170,4 +170,7 @@ export class DatalpiEnt implements dataLPI {
     description: '',
   })
   DateLoadedInDb: Date;
+
+  @ApiProperty()
+  DateVisited: Date;
 }

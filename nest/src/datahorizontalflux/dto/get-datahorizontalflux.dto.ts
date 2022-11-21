@@ -129,4 +129,7 @@ export class dtoDataHorizontalFlux {
 
   @Transform(({ value }) => value.trim().split(',').map(id=>String(id)))
   DBKey: string;
+
+  @Type(() => Date)
+  DateVisited: Date;
 }

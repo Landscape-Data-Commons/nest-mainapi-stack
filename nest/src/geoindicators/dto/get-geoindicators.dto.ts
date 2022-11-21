@@ -259,4 +259,5 @@ export class dtoGeoIndicators {
 
   @Transform(({ value }) => value.trim().split(',').map(id=>String(id)))
   modis_landcover: string;
+
 }

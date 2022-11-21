@@ -126,7 +126,7 @@ export class DatahorizontalfluxEnt implements dataHorizontalFlux {
     required: false,
     description: '',
   })
-  trapOpeningArea: string;
+  trapOpeningArea: number;
 
   @ApiProperty({
     type: String,
@@ -290,4 +290,7 @@ export class DatahorizontalfluxEnt implements dataHorizontalFlux {
     description: '',
   })
   DBKey: string;
+
+  @ApiProperty()
+  DateVisited: Date;
 }

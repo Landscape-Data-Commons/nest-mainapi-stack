@@ -40,6 +40,7 @@ model dataGap {
   AnnualForbsBasal    String?     @db.Bit(1)
   OtherBasal          String?     @db.Bit(1)
   source              String?
+  DateVisited         DateTime?   @db.Date
   dataHeader          dataHeader? @relation(fields: [PrimaryKey], references: [PrimaryKey], onDelete: NoAction, onUpdate: NoAction)
 
   @@unique([PrimaryKey, GapStart, GapEnd, rid], map: "idx_datagap_pk_gapstart_gapend_rid")
@@ -60,6 +61,7 @@ model dataHeader {
   DateLoadedInDb          DateTime?                @db.Date
   wkb_geometry            Unsupported("geometry")?
   source                  String?
+  rid                     Int                      @default(autoincrement())
   dataDustDeposition      dataDustDeposition[]
   dataGap                 dataGap[]
   dataHeight              dataHeight[]
@@ -94,13 +96,14 @@ model dataHeight {
   Direction             String?
   Measure               Int?
   LineLengthAmount      Int?
-  SpacingIntervalAmount Float?
+  SpacingIntervalAmount Decimal?    @db.Decimal
   SpacingType           String?
   HeightOption          String?
   HeightUOM             String?
   ShowCheckbox          String?     @db.Bit(1)
   CheckboxLabel         String?
   DateLoadedInDb        DateTime?   @db.Date
+  DateVisited           DateTime?   @db.Date
   dataHeader            dataHeader? @relation(fields: [PrimaryKey], references: [PrimaryKey], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([PrimaryKey, PointLoc, RecKey, LineKey, rid], map: "idx_dataheight_pk_pointloc_reckey_linekey_rid")
@@ -130,6 +133,7 @@ model dataLPI {
   PointNbr              Int?
   source                String?
   DateLoadedInDb        DateTime?   @db.Date
+  DateVisited           DateTime?   @db.Date
   dataHeader            dataHeader? @relation(fields: [PrimaryKey], references: [PrimaryKey], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([PrimaryKey, PointLoc, RecKey, LineKey, rid], map: "idx_datalpi_pk_pointloc_reckey_linekey_rid")
@@ -206,6 +210,7 @@ model dataSpeciesInventory {
   Notes               String?
   source              String?
   DateLoadedInDb      DateTime?   @db.Date
+  DateVisited         DateTime?   @db.Date
   dataHeader          dataHeader? @relation(fields: [PrimaryKey], references: [PrimaryKey], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([PrimaryKey, LineKey, RecKey, Species, rid], map: "idx_speciesinv_pk_linekey_reckey_species_rid")
@@ -314,6 +319,7 @@ model geoSpecies {
   GrowthHabitSub    String?
   SpeciesKey        String?
   DateLoadedInDb    DateTime?   @db.Date
+  DateVisited       DateTime?   @db.Date
   dataHeader        dataHeader? @relation(fields: [PrimaryKey], references: [PrimaryKey], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([PrimaryKey, Species, rid], map: "idx_geospe_pk_species_rid")
@@ -383,10 +389,13 @@ model dataDustDeposition {
 
 model dataHorizontalFlux {
   rid                    Int         @id @default(autoincrement())
+  ProjectKey             String?
+  PrimaryKey             String?
   BoxID                  String?
   StackID                String?
   Height                 Float?      @db.Real
   DateEstablished        DateTime?   @db.Timestamp(6)
+  DateVisited            DateTime?   @db.Date
   Description            String?
   openingSize            String?
   processMethod          String?
@@ -395,10 +404,9 @@ model dataHorizontalFlux {
   azimuth                String?
   SamplerType            String?
   InletArea              Float?      @db.Real
-  ProjectKey             String?
   Location               String?
   ItemType               String?
-  trapOpeningArea        String?
+  trapOpeningArea        Float?      @db.Real
   GPSCoordSys            String?
   Datum                  String?
   Zone                   String?
@@ -419,9 +427,8 @@ model dataHorizontalFlux {
   sedimentGperDayByInlet Float?      @db.Real
   SeqNo                  Int?
   SampleCompromised      String?     @db.Bit(1)
-  PrimaryKey             String?
-  DateLoadedInDb         DateTime?   @db.Date
   DBKey                  String?
+  DateLoadedInDb         DateTime?   @db.Date
   dataHeader             dataHeader? @relation(fields: [PrimaryKey], references: [PrimaryKey], onDelete: NoAction, onUpdate: NoAction)
 }
 

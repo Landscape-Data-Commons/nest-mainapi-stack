@@ -106,4 +106,7 @@ export class GeospeciesEnt implements geoSpecies {
     description: '',
   })
   DateLoadedInDb: Date;
+
+  @ApiProperty()
+  DateVisited: Date;
 }

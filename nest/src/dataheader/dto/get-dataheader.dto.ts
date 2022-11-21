@@ -1,6 +1,15 @@
-import { Transform, Type } from 'class-transformer';
+import { Exclude, Transform, Type } from 'class-transformer';
 
 export class dtoDataHeader {
+
+  @Exclude()
+  @Transform(({ value }) => value.trim().split(',').map(id=>Number(id)))
+  public take?: number;
+
+  @Exclude()
+  @Transform(({ value }) => value.trim().split(',').map(id=>Number(id)))
+  public cursor?: number;
+
   @Transform(({ value }) => value.trim().split(',').map(id=>String(id)))
   PrimaryKey: string;
 
@@ -42,4 +51,7 @@ export class dtoDataHeader {
 
   @Transform(({ value }) => value.trim().split(',').map(id=>String(id)))
   source: string;
+
+  @Transform(({ value }) => value.trim().split(',').map(id=>Number(id)))
+  rid: number;
 }

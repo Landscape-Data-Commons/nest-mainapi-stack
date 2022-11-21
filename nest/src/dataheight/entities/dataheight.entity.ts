@@ -1,4 +1,4 @@
-import { dataHeight } from '@prisma/client';
+import { dataHeight, Prisma } from '@prisma/client';
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 
 export class DataheightEnt implements dataHeight {
@@ -155,7 +155,7 @@ export class DataheightEnt implements dataHeight {
     required: false,
     description: '',
   })
-  SpacingIntervalAmount: number;
+  SpacingIntervalAmount: Prisma.Decimal;
 
   @ApiProperty({
     type: String,
@@ -199,4 +199,7 @@ export class DataheightEnt implements dataHeight {
     description: '',
   })
   DateLoadedInDb: Date;
+
+  @ApiProperty()
+  DateVisited: Date;
 }

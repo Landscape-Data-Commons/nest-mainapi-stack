@@ -89,4 +89,7 @@ export class dtoDataHeight {
 
   @Type(() => Date)
   DateLoadedInDb: Date;
+
+  @Type(() => Date)
+  DateVisited: Date;
 }

@@ -146,4 +146,7 @@ export class dtoDataSpeciesInventory{
 
   @Type(() => Date)
   DateLoadedInDb: Date;
+
+  @Type(() => Date)
+  DateVisited: Date;
 }
