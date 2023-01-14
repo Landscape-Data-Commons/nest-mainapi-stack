@@ -135,4 +135,12 @@ export class DatasoilstabilityEnt implements dataSoilStability {
     description: '',
   })
   DateLoadedInDb: Date;
+
+  @ApiProperty({
+    type: Date,
+    required: false,
+    // example: '2021-08-04',
+    description: 'The date that data were collected at the plot.',
+  })
+  DateVisited: Date;
 }

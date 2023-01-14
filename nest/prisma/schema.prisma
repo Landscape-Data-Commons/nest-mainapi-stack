@@ -61,7 +61,7 @@ model dataHeader {
   DateLoadedInDb          DateTime?                @db.Date
   wkb_geometry            Unsupported("geometry")?
   source                  String?
-  rid                     Int                      @default(autoincrement())
+  rid                     Int                      @unique(map: "dataheader_unique") @default(autoincrement())
   dataDustDeposition      dataDustDeposition[]
   dataGap                 dataGap[]
   dataHeight              dataHeight[]
@@ -158,6 +158,7 @@ model dataSoilStability {
   Notes              String?
   source             String?
   DateLoadedInDb     DateTime?   @db.Date
+  DateVisited        DateTime?   @db.Date
   dataHeader         dataHeader? @relation(fields: [PrimaryKey], references: [PrimaryKey], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([PrimaryKey, RecKey, Position, Pos, rid], map: "idx_soil_pk_reckey_position_pos_rid")

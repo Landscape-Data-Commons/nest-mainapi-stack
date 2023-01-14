@@ -7,7 +7,7 @@ import { LikeOperator } from 'src/CustomRequest.decorator';
 export class DatadustdepositionService {
   constructor(public prisma: PrismaService) {}
 
-  FindManyDustDeposition(params?: {}): Promise<dataDustDeposition[] | null> {
+  FindManyDustDeposition(params?: any): Promise<dataDustDeposition[] | null> {
     const { ...whereParams } = params['params'];
 
     if ('wildcards' in params) {

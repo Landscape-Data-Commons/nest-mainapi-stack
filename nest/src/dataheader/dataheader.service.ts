@@ -1,20 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { dataHeader } from '@prisma/client';
+import { dataHeader, Prisma } from '@prisma/client';
 import { LikeOperator } from 'src/CustomRequest.decorator';
+
 
 @Injectable()
 export class DataheaderService {
   constructor(public prisma: PrismaService) {}
 
-  FindManyHeader(params?: {}): Promise<dataHeader[] | null> {
+  FindManyHeader(params?: any): Promise<dataHeader[] | null> {
     const { ...whereParams } = params['params'];
     const { take, cursor } = params;
 
     if ('wildcards' in params) {
       const { ...wildcards } = params['wildcards'];
       const wc = LikeOperator(wildcards);
-      
       if (!isNaN(take) && !isNaN(cursor)) {
         console.log('withlike: with take or cursor');
         return this.prisma.dataHeader.findMany({
