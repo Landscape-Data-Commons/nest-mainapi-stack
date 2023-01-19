@@ -1,6 +1,6 @@
 # https://github.com/prisma/prisma/issues/10649
-# FROM node:18-alpine3.15 AS development
-FROM node:16.17-alpine3.15 AS development
+FROM node:19-alpine3.16 AS development
+# FROM node:16.17-alpine3.15 AS development
 
 WORKDIR /usr/src/app
 
@@ -16,8 +16,8 @@ USER node
 # BUILD FOR PRODUCTION
 ###################
 
-# FROM node:18-alpine3.15 As build
-FROM node:16.17-alpine3.15 As build
+FROM node:19-alpine3.16 As build
+#FROM node:16.17-alpine3.15 As build
 
 WORKDIR /usr/src/app
 
@@ -39,8 +39,8 @@ USER node
 # PRODUCTION
 ###################
 
-# FROM node:18-alpine3.15 As production
-FROM node:16.17-alpine3.15 As production
+ FROM node:19-alpine3.16 As production
+# FROM node:16.17-alpine3.15 As production
 
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
