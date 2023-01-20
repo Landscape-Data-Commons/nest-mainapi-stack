@@ -19,7 +19,7 @@ jobs:
       - name: Read package.json
         uses: tyankatsu0105/read-package-version-actions@v1
         with: 
-          path: "./nest/package.json"
+          path: "./nest"
         id: package-version
 
     # keeping track of docker image on the hub 
