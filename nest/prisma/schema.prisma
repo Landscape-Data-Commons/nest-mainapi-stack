@@ -327,6 +327,7 @@ model geoSpecies {
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model modis_values {
   index      BigInt?
   PrimaryKey String?
