@@ -4,7 +4,6 @@ FROM node:19-alpine3.17 AS development
 WORKDIR /usr/src/app
 
 COPY --chown=node:node package*.json ./
-COPY --chown=node:node package-lock.json ./
 
 RUN npm ci
 
