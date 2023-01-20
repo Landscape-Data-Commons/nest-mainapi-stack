@@ -5,13 +5,13 @@ FROM node:19-alpine3.16 AS development
 WORKDIR /usr/src/app
 
 COPY --chown=node:node package*.json ./
-COPY --chown=node:node ./prisma/schema.prisma ./
+#COPY --chown=node:node ./prisma/schema.prisma ./
 RUN npm ci
 
 # build nest/client
 
-RUN npx prisma db pull --schema ./schema.prisma
-RUN npx prisma generate
+# RUN npx prisma db pull --schema ./schema.prisma
+# RUN npx prisma generate
 
 COPY --chown=node:node . .
 
