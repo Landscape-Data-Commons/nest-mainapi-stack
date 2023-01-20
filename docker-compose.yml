@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: ./nest/node.Dockerfile
-    volumes:
+    # volumes:
     #   -
     ports:
       - "5016:3000"
