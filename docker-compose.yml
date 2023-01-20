@@ -3,10 +3,10 @@ services:
   nest:
     image: landscapedatacommons/nest_api:1.0.13
     # image: nestapi
-    # build:
-    #   context: .
-    #   dockerfile: ./nest/node.Dockerfile
-    # volumes:
+    build:
+      context: .
+      dockerfile: ./nest/node.Dockerfile
+    volumes:
     #   -
     ports:
       - "5016:3000"

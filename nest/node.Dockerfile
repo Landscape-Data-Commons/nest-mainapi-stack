@@ -8,6 +8,11 @@ COPY --chown=node:node package*.json ./
 
 RUN npm ci
 
+# build nest/client
+
+RUN npx prisma db pull
+RUN npx prisma generate
+
 COPY --chown=node:node . .
 
 USER node
