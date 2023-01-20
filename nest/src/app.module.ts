@@ -14,6 +14,10 @@ import { DatadustdepositionModule } from './datadustdeposition/datadustdepositio
 import { DatahorizontalfluxModule } from './datahorizontalflux/datahorizontalflux.module';
 import { TblSchemaModule } from './tbl-schema/tbl-schema.module';
 
+import { ConfigModule } from '@nestjs/config';
+
+import { AuthModule } from './auth/auth.module';
+
 @Module({
   imports: [
     DatagapModule,
@@ -28,6 +32,8 @@ import { TblSchemaModule } from './tbl-schema/tbl-schema.module';
     DatadustdepositionModule,
     DatahorizontalfluxModule,
     TblSchemaModule,
+    AuthModule,
+    ConfigModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService],
