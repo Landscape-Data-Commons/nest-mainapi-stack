@@ -3,11 +3,11 @@ FROM node:19-alpine3.17 AS development
 
 WORKDIR /usr/src/app
 
-COPY --chown=node:node package*.json ./
+COPY --chown=node:node ./nest/package*.json ./
 
-RUN npm install
+RUN npm i
 
-COPY --chown=node:node . .
+COPY --chown=node:node ./nest .
 
 USER node
 
@@ -19,7 +19,7 @@ FROM node:19-alpine3.17 As build
 
 WORKDIR /usr/src/app
 
-COPY --chown=node:node package*.json ./
+COPY --chown=node:node ./nest/package*.json ./
 
 COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modules
 
