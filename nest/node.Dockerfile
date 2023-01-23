@@ -24,9 +24,10 @@ COPY --chown=node:node ./nest/package*.json ./
 COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modules
 
 COPY --chown=node:node ./nest/prisma .
+COPY --chown=node:node ./nest/tsconfig.json .
 # COPY --chown=node:node ./nest/prisma ./prisma
 
-RUN npm run build
+RUN npm run build -- --path /usr/src/app/tsconfig.json
 
 ENV NODE_ENV production
 
