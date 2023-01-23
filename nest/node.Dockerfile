@@ -31,7 +31,7 @@ RUN npm run build -- --path ./tsconfig.json
 
 ENV NODE_ENV production
 
-RUN npm ci
+RUN npm i
 
 USER node
 
