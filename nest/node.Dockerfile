@@ -19,7 +19,7 @@ FROM node:19-alpine3.17 As build
 
 WORKDIR /usr/src/app
 
-COPY --chown=node:node ./nest/package*.json ./
+COPY --chown=node:node ./nest/package*.json .
 
 COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modules
 
