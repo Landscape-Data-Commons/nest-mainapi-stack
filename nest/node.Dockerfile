@@ -23,7 +23,8 @@ COPY --chown=node:node ./nest/package*.json ./
 
 COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modules
 
-COPY --chown=node:node ./nest .
+COPY --chown=node:node ./nest/prisma .
+# COPY --chown=node:node ./nest/prisma ./prisma
 
 RUN npm run build
 
