@@ -11,6 +11,18 @@ async function bootstrap() {
     .setTitle('LDC Tall Table Api')
     .setDescription('The Tall Table API description')
     .setVersion('0.1')
+    // auth/swagger integration test
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'JWT',
+        description: 'Enter JWT token',
+        in: 'header',
+      },
+      'JWT-auth', // Has to match apibearerauth()
+    )
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-docs', app, document);

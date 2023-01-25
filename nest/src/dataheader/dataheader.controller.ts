@@ -1,11 +1,13 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 
 import { CustomRequestObjHandler } from '../CustomRequest.decorator';
 import { DataheaderService } from './dataheader.service';
 import { dtoDataHeader } from './dto/get-dataheader.dto';
 import { DataheaderEnt } from './entities/dataheader.entity';
+import { ApiKeyAuthGuard } from 'src/auth/guard/apikey-auth.guard';
 
+// @UseGuards(ApiKeyAuthGuard)
 @Controller('dataheader')
 export class DataheaderController {
   constructor(private readonly dataheaderService: DataheaderService) {}

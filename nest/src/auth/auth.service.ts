@@ -18,6 +18,13 @@ export class AuthService {
     });
   }
 
+  // APIKEY 
+  validateApiKey(apiKey: string){
+    const apiKeys: string[] = ['api-key-1', 'api-key-2'];
+    return apiKeys.find((key) => apiKey == key);
+  }
+
+  // COGNITO
   authenticateUser(user: { name: string; password: string }) {
     const { name, password } = user;
 
