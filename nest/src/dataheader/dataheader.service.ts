@@ -3,7 +3,6 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { dataHeader, Prisma } from '@prisma/client';
 import { LikeOperator } from 'src/CustomRequest.decorator';
 
-
 @Injectable()
 export class DataheaderService {
   constructor(public prisma: PrismaService) {}
