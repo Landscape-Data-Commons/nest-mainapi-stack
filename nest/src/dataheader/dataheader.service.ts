@@ -6,10 +6,14 @@ import { LikeOperator } from 'src/CustomRequest.decorator';
 @Injectable()
 export class DataheaderService {
   constructor(public prisma: PrismaService) {}
+  
 
   FindManyHeader(params?: any): Promise<dataHeader[] | null> {
+    console.log(params)
     const { ...whereParams } = params['params'];
     const { take, cursor } = params;
+
+    console.log(Object.getOwnPropertyNames(PrismaService))
 
     if ('wildcards' in params) {
       const { ...wildcards } = params['wildcards'];
@@ -53,7 +57,7 @@ export class DataheaderService {
         });
       } else {
         console.log('nolike: no cursor');
-        return this.prisma.dataHeader.findMany({
+        return this.prisma.NDOWClient.dataHeader.findMany({
           where: { ...whereParams },
           take,
           orderBy: {
