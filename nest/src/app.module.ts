@@ -17,6 +17,7 @@ import { TblSchemaModule } from './tbl-schema/tbl-schema.module';
 import { ConfigModule } from '@nestjs/config';
 
 import { AuthModule } from './auth/auth.module';
+import { AerosummaryModule } from './aerosummary/aerosummary.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { AuthModule } from './auth/auth.module';
     TblSchemaModule,
     AuthModule,
     ConfigModule.forRoot(),
+    AerosummaryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
