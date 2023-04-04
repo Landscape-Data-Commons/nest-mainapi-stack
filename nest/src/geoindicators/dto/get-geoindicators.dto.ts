@@ -260,4 +260,18 @@ export class dtoGeoIndicators {
   @Transform(({ value }) => value.trim().split(',').map(id=>String(id)))
   modis_landcover: string;
 
+  //  added geoindicators_view fields below 
+
+  @Transform(({ value }) => value.trim().split(',').map(id=>Number(id)))
+  horizontal_flux_total_MD: number;
+
+  @Transform(({ value }) => value.trim().split(',').map(id=>Number(id)))
+  vertical_flux_MD: number;
+
+  @Transform(({ value }) => value.trim().split(',').map(id=>Number(id)))
+  PM2_5_MD: number;
+
+  @Transform(({ value }) => value.trim().split(',').map(id=>Number(id)))
+  PM10_MD: number;
+
 }

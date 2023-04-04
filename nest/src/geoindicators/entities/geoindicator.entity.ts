@@ -254,4 +254,18 @@ export class GeoindicatorEnt implements geoIndicators {
 
   @ApiProperty()
   modis_landcover: string;
+
+  //  added geoindicators_view fields below
+
+  @ApiProperty()
+  horizontal_flux_total_MD: number;
+
+  @ApiProperty()
+  vertical_flux_MD: number;
+
+  @ApiProperty()
+  PM2_5_MD: number;
+
+  @ApiProperty()
+  PM10_MD: number;
 }

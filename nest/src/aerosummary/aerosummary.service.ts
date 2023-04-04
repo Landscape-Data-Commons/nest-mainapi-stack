@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { geoIndicators_view } from '@prisma/client';
+import { aero_summary as AeroSummary } from '.prisma/client_aero';
 import { LikeOperator } from 'src/CustomRequest.decorator';
 
 @Injectable()
 export class AerosummaryService {
   constructor(public prisma: PrismaService) {}
 
-  FindManyAeroSummary(params: any): Promise<geoIndicators_view[] | null> {
+  FindManyAeroSummary(params: any): Promise<AeroSummary[] | null> {
     const { ...whereParams } = params['params'];
     const { take, cursor } = params;
 
@@ -16,7 +17,7 @@ export class AerosummaryService {
       const wc = LikeOperator(wildcards);
       if (!isNaN(take) && !isNaN(cursor)) {
         console.log('withlike: with take or cursor');
-        return this.prisma.geoIndicators_view.findMany({
+        return this.prisma.AEROClient.aero_summary.findMany({
           where: { ...whereParams, ...wc },
           skip: 1,
           take,
@@ -29,7 +30,7 @@ export class AerosummaryService {
         });
       } else {
         console.log('withlike: no take or cursor');
-        return this.prisma.geoIndicators_view.findMany({
+        return this.prisma.AEROClient.aero_summary.findMany({
           where: { ...whereParams, ...wc },
           take,
           orderBy: {
@@ -40,7 +41,7 @@ export class AerosummaryService {
     } else {
       if (!isNaN(take) && !isNaN(cursor)) {
         console.log('nolike: with cursor');
-        return this.prisma.geoIndicators_view.findMany({
+        return this.prisma.AEROClient.aero_summary.findMany({
           where: { ...whereParams },
           skip: 1,
           take,
@@ -53,7 +54,7 @@ export class AerosummaryService {
         });
       } else {
         console.log('nolike: no cursor');
-        return this.prisma.geoIndicators_view.findMany({
+        return this.prisma.AEROClient.aero_summary.findMany({
           where: { ...whereParams },
           take,
           orderBy: {

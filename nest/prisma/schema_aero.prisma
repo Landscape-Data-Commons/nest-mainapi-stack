@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("AERO_URL")
+}
+
+model aero_runs {
+  parameter_set         Int?
+  likelihood            Float?
+  horizontal_flux_total Float?
+  vertical_flux         Float?
+  PM1                   Float?
+  PM2_5                 Float?
+  PM10                  Float?
+  PrimaryKey            String?
+  rid                   Int     @id @default(autoincrement())
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model aero_summary {
+  PrimaryKey                String?
+  horizontal_flux_total_LPI Float?
+  horizontal_flux_total_UPI Float?
+  horizontal_flux_total_MD  Float?
+  horizontal_flux_total_MN  Float?
+  horizontal_flux_total_STD Float?
+  vertical_flux_LPI         Float?
+  vertical_flux_UPI         Float?
+  vertical_flux_MD          Float?
+  vertical_flux_MN          Float?
+  vertical_flux_STD         Float?
+  PM1_LPI                   Float?
+  PM1_UPI                   Float?
+  PM1_MD                    Float?
+  PM1_MN                    Float?
+  PM1_STD                   Float?
+  PM2_5_LPI                 Float?
+  PM2_5_UPI                 Float?
+  PM2_5_MD                  Float?
+  PM2_5_MN                  Float?
+  PM2_5_STD                 Float?
+  PM10_LPI                  Float?
+  PM10_UPI                  Float?
+  PM10_MD                   Float?
+  PM10_MN                   Float?
+  PM10_STD                  Float?
+  rid                       Int     @id @default(autoincrement())
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model model_runs {
+  ModelRunKey          String
+  Model                String?
+  Coordinates          String?
+  SurfaceSoilSource    String?
+  MeteorologicalSource String?
+  ModelRunNotes        String?
+  rid                  Int     @id @default(autoincrement())
+
+  @@ignore
+}
