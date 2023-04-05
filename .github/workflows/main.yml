@@ -48,5 +48,5 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            docker service update nest-api_nest \
+            docker service update nest_nest \
             --image=docker.io/landscapedatacommons/nest_api:${{ steps.package-version.outputs.version }}
