@@ -19,6 +19,8 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { AerosummaryModule } from './aerosummary/aerosummary.module';
 
+import { CognitoAuthModule } from "@nestjs-cognito/auth";
+
 @Module({
   imports: [
     DatagapModule,
@@ -36,6 +38,13 @@ import { AerosummaryModule } from './aerosummary/aerosummary.module';
     AuthModule,
     ConfigModule.forRoot(),
     AerosummaryModule,
+    CognitoAuthModule.register({
+      jwtVerifier: {
+        userPoolId: "us-west-1_FgaW15JOh",
+        clientId: "3ocfhcl3smtnnu6m0qkne8v8tg",
+        tokenUse: "id",
+      }
+    })
   ],
   controllers: [AppController],
   providers: [AppService],

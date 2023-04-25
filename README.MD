@@ -1,5 +1,12 @@
 # NestJS/Fastify Rest API for LDC Tall table data
 
+## todo:
+- public/authorized authguard resources, making it optional like express/next():
+  - https://dev.to/dannypule/exclude-route-from-nest-js-authgaurd-h0
+  - https://stackoverflow.com/a/75508767
+  - https://blog.logrocket.com/understanding-guards-nestjs/
+  - https://docs.nestjs.com/guards
+
 This stack features a production build of NestJS inside a container proxied by Traefik(also containerized). Leverages Fastify instead of Express to handle routes/controllers, and Prisma as an ORM to interact with a Postgresql DB.
 
 Documented by swagger (this-apis-domain.com/api-docs)
