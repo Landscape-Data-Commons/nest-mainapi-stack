@@ -5,22 +5,7 @@ import { CustomRequestObjHandler } from '../CustomRequest.decorator';
 import { AerosummaryService } from './aerosummary.service';
 import { dtoAerosummary } from './dto/get-aerosummary.dto';
 import { AerosummaryEnt } from './entities/aerosummary.entity';
-import { NextFunction as next } from 'express';
-import { CustomInterceptor } from 'src/CustomMetadata.interceptor';
-import { CustomAuthGuard } from 'src/NoAuthGuard.decorator';
-import { AuthGuard } from 'src/auth.guard';
 
-import {
-  Authentication,
-  Authorization,
-  AuthorizationGuard,
-  AuthenticationGuard,
-  CognitoUser,
-} from "@nestjs-cognito/auth";
-import { HttpCode, Res, UseGuards, UseInterceptors } from '@nestjs/common/decorators';
-import { CognitoJwtPayload } from "aws-jwt-verify/jwt-model";
-import { Public } from 'src/roles.guard';
-import { Reflector } from '@nestjs/core';
 import { CognitoJwtVerifier } from 'aws-jwt-verify';
 
 @Controller('aerosummary')
