@@ -1,5 +1,8 @@
 # NestJS/Fastify Rest API for LDC Tall table data
 
+## to enable switching between different postgres connection clients:
+1. create copies of `schema.prisma` file for each pgclient
+
 ## todo:
 - public/authorized authguard resources, making it optional like express/next():
   - https://dev.to/dannypule/exclude-route-from-nest-js-authgaurd-h0

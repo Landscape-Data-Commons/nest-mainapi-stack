@@ -1,0 +1,466 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["views"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("NDOW_URL")
+}
+
+model dataGap {
+  rid                 Int         @id @default(autoincrement())
+  PrimaryKey          String?
+  DBKey               String?
+  ProjectKey          String?
+  RecType             String?
+  SeqNo               Int?
+  GapStart            Float?
+  GapEnd              Float?
+  Gap                 Float?
+  LineKey             String?
+  RecKey              String?
+  FormDate            DateTime?   @db.Date
+  DateModified        DateTime?   @db.Date
+  FormType            String?
+  Direction           String?
+  Measure             Int?
+  LineLengthAmount    Float?
+  GapMin              Float?
+  GapData             Int?
+  PerennialsCanopy    String?     @db.Bit(1)
+  AnnualGrassesCanopy String?     @db.Bit(1)
+  AnnualForbsCanopy   String?     @db.Bit(1)
+  OtherCanopy         String?     @db.Bit(1)
+  Notes               String?
+  NoCanopyGaps        Int?
+  NoBasalGaps         Int?
+  DateLoadedInDb      DateTime?   @db.Date
+  PerennialsBasal     String?     @db.Bit(1)
+  AnnualGrassesBasal  String?     @db.Bit(1)
+  AnnualForbsBasal    String?     @db.Bit(1)
+  OtherBasal          String?     @db.Bit(1)
+  source              String?
+  DateVisited         DateTime?   @db.Date
+  dataHeader          dataHeader? @relation(fields: [PrimaryKey], references: [PrimaryKey], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([PrimaryKey, GapStart, GapEnd, rid], map: "idx_datagap_pk_gapstart_gapend_rid")
+}
+
+model dataHeader {
+  PrimaryKey              String                   @id
+  DBKey                   String?
+  ProjectKey              String?
+  DateVisited             DateTime?                @db.Date
+  Latitude_NAD83          Float?
+  Longitude_NAD83         Float?
+  LocationType            String?
+  EcologicalSiteID        String?
+  PercentCoveredByEcoSite Float?
+  SpeciesKey              String?
+  PlotID                  String?
+  DateLoadedInDb          DateTime?                @db.Date
+  wkb_geometry            Unsupported("geometry")?
+  source                  String?
+  rid                     Int                      @unique(map: "dataheader_unique") @default(autoincrement())
+  dataGap                 dataGap[]
+  dataHeight              dataHeight[]
+  dataLPI                 dataLPI[]
+  dataSoilStability       dataSoilStability[]
+  dataSpeciesInventory    dataSpeciesInventory[]
+  geoIndicators           geoIndicators?
+  geoSpecies              geoSpecies[]
+
+  @@index([PrimaryKey, wkb_geometry], map: "idx_dataheader_geom_pk")
+}
+
+model dataHeight {
+  rid                   Int         @id @default(autoincrement())
+  PrimaryKey            String?
+  DBKey                 String?
+  ProjectKey            String?
+  PointLoc              Float?
+  PointNbr              Int?
+  RecKey                String?
+  Height                Float?
+  Species               String?
+  Chkbox                String?     @db.Bit(1)
+  type                  String?
+  GrowthHabit_measured  String?
+  LineKey               String?
+  DateModified          DateTime?   @db.Date
+  FormType              String?
+  FormDate              DateTime?   @db.Date
+  source                String?
+  Direction             String?
+  Measure               Int?
+  LineLengthAmount      Int?
+  SpacingIntervalAmount Decimal?    @db.Decimal
+  SpacingType           String?
+  HeightOption          String?
+  HeightUOM             String?
+  ShowCheckbox          String?     @db.Bit(1)
+  CheckboxLabel         String?
+  DateLoadedInDb        DateTime?   @db.Date
+  DateVisited           DateTime?   @db.Date
+  dataHeader            dataHeader? @relation(fields: [PrimaryKey], references: [PrimaryKey], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([PrimaryKey, PointLoc, RecKey, LineKey, rid], map: "idx_dataheight_pk_pointloc_reckey_linekey_rid")
+}
+
+model dataLPI {
+  rid                   Int         @id @default(autoincrement())
+  PrimaryKey            String?
+  DBKey                 String?
+  ProjectKey            String?
+  LineKey               String?
+  RecKey                String?
+  layer                 String?
+  code                  String?
+  chckbox               String?     @db.Bit(1)
+  ShrubShape            String?
+  FormType              String?
+  FormDate              DateTime?   @db.Date
+  Direction             String?
+  Measure               Int?
+  LineLengthAmount      Int?
+  SpacingIntervalAmount Float?
+  SpacingType           String?
+  ShowCheckbox          String?     @db.Bit(1)
+  CheckboxLabel         String?
+  PointLoc              Float?
+  PointNbr              Int?
+  source                String?
+  DateLoadedInDb        DateTime?   @db.Date
+  DateVisited           DateTime?   @db.Date
+  dataHeader            dataHeader? @relation(fields: [PrimaryKey], references: [PrimaryKey], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([PrimaryKey, PointLoc, RecKey, LineKey, rid], map: "idx_datalpi_pk_pointloc_reckey_linekey_rid")
+}
+
+model dataSoilStability {
+  rid                Int         @id @default(autoincrement())
+  PrimaryKey         String?
+  DBKey              String?
+  ProjectKey         String?
+  RecKey             String?
+  FormType           String?
+  FormDate           DateTime?   @db.Date
+  LineKey            String?
+  SoilStabSubSurface Int?
+  Line               String?
+  Position           Int?
+  Pos                String?
+  Veg                String?
+  Rating             Int?
+  Hydro              String?     @db.Bit(1)
+  Notes              String?
+  source             String?
+  DateLoadedInDb     DateTime?   @db.Date
+  DateVisited        DateTime?   @db.Date
+  dataHeader         dataHeader? @relation(fields: [PrimaryKey], references: [PrimaryKey], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([PrimaryKey, RecKey, Position, Pos, rid], map: "idx_soil_pk_reckey_position_pos_rid")
+}
+
+model dataSpeciesInventory {
+  rid                 Int         @id @default(autoincrement())
+  PrimaryKey          String?
+  DBKey               String?
+  ProjectKey          String?
+  Species             String?
+  DENSITY             Int?
+  LineKey             String?
+  RecKey              String?
+  FormType            String?
+  FormDate            DateTime?   @db.Date
+  SpecRichMethod      Int?
+  SpecRichMeasure     Int?
+  SpecRichNbrSubPlots Int?
+  SpecRich1Container  String?     @db.Bit(1)
+  SpecRich1Shape      Int?
+  SpecRich1Dim1       Float?
+  SpecRich1Dim2       Float?
+  SpecRich1Area       Float?
+  SpecRich2Container  String?     @db.Bit(1)
+  SpecRich2Shape      Int?
+  SpecRich2Dim1       Float?
+  SpecRich2Dim2       Float?
+  SpecRich2Area       Float?
+  SpecRich3Container  String?     @db.Bit(1)
+  SpecRich3Shape      Int?
+  SpecRich3Dim1       Float?
+  SpecRich3Dim2       Float?
+  SpecRich3Area       Float?
+  SpecRich4Container  String?     @db.Bit(1)
+  SpecRich4Shape      Int?
+  SpecRich4Dim1       Float?
+  SpecRich4Dim2       Float?
+  SpecRich4Area       Float?
+  SpecRich5Container  String?     @db.Bit(1)
+  SpecRich5Shape      Int?
+  SpecRich5Dim1       Float?
+  SpecRich5Dim2       Float?
+  SpecRich5Area       Float?
+  SpecRich6Container  String?     @db.Bit(1)
+  SpecRich6Shape      Int?
+  SpecRich6Dim1       Float?
+  SpecRich6Dim2       Float?
+  SpecRich6Area       Float?
+  Notes               String?
+  source              String?
+  DateLoadedInDb      DateTime?   @db.Date
+  DateVisited         DateTime?   @db.Date
+  dataHeader          dataHeader? @relation(fields: [PrimaryKey], references: [PrimaryKey], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([PrimaryKey, LineKey, RecKey, Species, rid], map: "idx_speciesinv_pk_linekey_reckey_species_rid")
+}
+
+model geoIndicators {
+  rid                       Int                      @id @default(autoincrement())
+  PrimaryKey                String?                  @unique(map: "geoIndicators_PrimaryKey_unique")
+  DBKey                     String?
+  ProjectKey                String?
+  DateVisited               DateTime?                @db.Date
+  EcologicalSiteId          String?
+  PercentCoveredByEcoSite   Float?
+  Latitude_NAD83            Decimal?                 @db.Decimal
+  Longitude_NAD83           Decimal?                 @db.Decimal
+  LocationStatus            String?
+  LocationType              String?
+  Latitude_NAD83_Actual     Float?
+  Longitude_NAD83_Actual    Float?
+  BareSoilCover             Float?
+  TotalFoliarCover          Float?
+  AH_AnnGrassCover          Float?
+  AH_ForbCover              Float?
+  AH_GrassCover             Float?
+  AH_PerenForbCover         Float?
+  AH_PerenForbGrassCover    Float?
+  AH_PerenGrassCover        Float?
+  AH_ShrubCover             Float?
+  FH_CyanobacteriaCover     Float?
+  FH_DepSoilCover           Float?
+  FH_DuffCover              Float?
+  FH_EmbLitterCover         Float?
+  FH_HerbLitterCover        Float?
+  FH_LichenCover            Float?
+  FH_MossCover              Float?
+  FH_RockCover              Float?
+  FH_TotalLitterCover       Float?
+  FH_VagrLichenCover        Float?
+  FH_WaterCover             Float?
+  FH_WoodyLitterCover       Float?
+  GapCover_101_200          Float?
+  GapCover_200_plus         Float?
+  GapCover_25_50            Float?
+  GapCover_25_plus          Float?
+  GapCover_51_100           Float?
+  Hgt_Forb_Avg              Float?
+  Hgt_Grass_Avg             Float?
+  Hgt_Herbaceous_Avg        Float?
+  Hgt_PerenForb_Avg         Float?
+  Hgt_PerenForbGrass_Avg    Float?
+  Hgt_PerenGrass_Avg        Float?
+  Hgt_Woody_Avg             Float?
+  RH_AnnualProd             String?
+  RH_BareGround             String?
+  RH_BioticIntegrity        String?
+  RH_CommentsBI             String?
+  RH_CommentsHF             String?
+  RH_CommentsSS             String?
+  RH_Compaction             String?
+  RH_DeadDyingPlantParts    String?
+  RH_FuncSructGroup         String?
+  RH_Gullies                String?
+  RH_HydrologicFunction     String?
+  RH_InvasivePlants         String?
+  RH_LitterAmount           String?
+  RH_LitterMovement         String?
+  RH_PedestalsTerracettes   String?
+  RH_PlantCommunityComp     String?
+  RH_ReprodCapabilityPeren  String?
+  RH_Rills                  String?
+  RH_SoilSiteStability      String?
+  RH_SoilSurfLossDeg        String?
+  RH_SoilSurfResisErosion   String?
+  RH_WaterFlowPatterns      String?
+  RH_WindScouredAreas       String?
+  SoilStability_All         Float?
+  SoilStability_Protected   Float?
+  SoilStability_Unprotected Float?
+  DateLoadedInDb            DateTime?                @db.Date
+  mlra_name                 String?                  @db.VarChar(200)
+  mlrarsym                  String?                  @db.VarChar(4)
+  na_l1name                 String?                  @db.VarChar(100)
+  na_l2name                 String?                  @db.VarChar(100)
+  us_l3name                 String?                  @db.VarChar(100)
+  us_l4name                 String?                  @db.VarChar(100)
+  State                     String?
+  modis_landcover           String?                  @db.VarChar(100)
+  wkb_geometry              Unsupported("geometry")?
+  dataHeader                dataHeader?              @relation(fields: [PrimaryKey], references: [PrimaryKey], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([PrimaryKey, rid], map: "idx_geoind_rid_pk")
+}
+
+model geoSpecies {
+  rid               Int         @id @default(autoincrement())
+  PrimaryKey        String?
+  DBKey             String?
+  ProjectKey        String?
+  Species           String?
+  AH_SpeciesCover   Float?
+  AH_SpeciesCover_n Int?
+  Hgt_Species_Avg   Float?
+  Hgt_Species_Avg_n Int?
+  Duration          String?
+  GrowthHabit       String?
+  GrowthHabitSub    String?
+  SpeciesKey        String?
+  DateLoadedInDb    DateTime?   @db.Date
+  DateVisited       DateTime?   @db.Date
+  dataHeader        dataHeader? @relation(fields: [PrimaryKey], references: [PrimaryKey], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([PrimaryKey, Species, rid], map: "idx_geospe_pk_species_rid")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+/// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
+// model modis_values {
+// @@ignore
+// }
+
+model tblProject {
+  project_key               String  @id
+  project_name              String?
+  project_description       String?
+  project_website           String?
+  data_use_agreement        String?
+  curator_PersonName        String?
+  curator_organization      String?
+  curator_email             String?
+  author_PersonName         String?
+  author_email              String?
+  author_orcid_id           String?
+  addit_contact_person      String?
+  addit_contact_email       String?
+  bibliographical_reference String?
+  data_doi                  String?
+}
+
+/// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
+// model dataDustDeposition {
+// }
+
+/// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
+// model dataHorizontalFlux {
+// }
+
+model tblSchema {
+  rid           Int       @id @default(autoincrement())
+  Order         Decimal?  @db.Decimal
+  Table         String?
+  Field         String?
+  Alias         String?
+  Description   String?
+  DataType      String?
+  Length        String?
+  DatatypeNotes String?
+  Min           Decimal?  @db.Decimal
+  Max           Decimal?  @db.Decimal
+  Unit          String?
+  SigFig        Decimal?  @db.Decimal
+  Version       String?
+  Uploaded      DateTime? @db.Date
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+view geoIndicators_view {
+  rid                       Int       @id
+  PrimaryKey                String?
+  DBKey                     String?
+  ProjectKey                String?
+  DateVisited               DateTime? @db.Date
+  EcologicalSiteId          String?
+  PercentCoveredByEcoSite   Float?
+  Latitude_NAD83            Decimal?  @db.Decimal
+  Longitude_NAD83           Decimal?  @db.Decimal
+  LocationStatus            String?
+  LocationType              String?
+  Latitude_NAD83_Actual     Float?
+  Longitude_NAD83_Actual    Float?
+  BareSoilCover             Float?
+  TotalFoliarCover          Float?
+  AH_AnnGrassCover          Float?
+  AH_ForbCover              Float?
+  AH_GrassCover             Float?
+  AH_PerenForbCover         Float?
+  AH_PerenForbGrassCover    Float?
+  AH_PerenGrassCover        Float?
+  AH_ShrubCover             Float?
+  FH_CyanobacteriaCover     Float?
+  FH_DepSoilCover           Float?
+  FH_DuffCover              Float?
+  FH_EmbLitterCover         Float?
+  FH_HerbLitterCover        Float?
+  FH_LichenCover            Float?
+  FH_MossCover              Float?
+  FH_RockCover              Float?
+  FH_TotalLitterCover       Float?
+  FH_VagrLichenCover        Float?
+  FH_WaterCover             Float?
+  FH_WoodyLitterCover       Float?
+  GapCover_101_200          Float?
+  GapCover_200_plus         Float?
+  GapCover_25_50            Float?
+  GapCover_25_plus          Float?
+  GapCover_51_100           Float?
+  Hgt_Forb_Avg              Float?
+  Hgt_Grass_Avg             Float?
+  Hgt_Herbaceous_Avg        Float?
+  Hgt_PerenForb_Avg         Float?
+  Hgt_PerenForbGrass_Avg    Float?
+  Hgt_PerenGrass_Avg        Float?
+  Hgt_Woody_Avg             Float?
+  RH_AnnualProd             String?
+  RH_BareGround             String?
+  RH_BioticIntegrity        String?
+  RH_CommentsBI             String?
+  RH_CommentsHF             String?
+  RH_CommentsSS             String?
+  RH_Compaction             String?
+  RH_DeadDyingPlantParts    String?
+  RH_FuncSructGroup         String?
+  RH_Gullies                String?
+  RH_HydrologicFunction     String?
+  RH_InvasivePlants         String?
+  RH_LitterAmount           String?
+  RH_LitterMovement         String?
+  RH_PedestalsTerracettes   String?
+  RH_PlantCommunityComp     String?
+  RH_ReprodCapabilityPeren  String?
+  RH_Rills                  String?
+  RH_SoilSiteStability      String?
+  RH_SoilSurfLossDeg        String?
+  RH_SoilSurfResisErosion   String?
+  RH_WaterFlowPatterns      String?
+  RH_WindScouredAreas       String?
+  SoilStability_All         Float?
+  SoilStability_Protected   Float?
+  SoilStability_Unprotected Float?
+  DateLoadedInDb            DateTime? @db.Date
+  mlra_name                 String?   @db.VarChar(200)
+  mlrarsym                  String?   @db.VarChar(4)
+  na_l1name                 String?   @db.VarChar(100)
+  na_l2name                 String?   @db.VarChar(100)
+  us_l3name                 String?   @db.VarChar(100)
+  us_l4name                 String?   @db.VarChar(100)
+  State                     String?
+  modis_landcover           String?   @db.VarChar(100)
+  horizontal_flux_total_MD  Float?
+  vertical_flux_MD          Float?
+  PM2_5_MD                  Float?
+  PM10_MD                   Float?
+}

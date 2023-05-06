@@ -13,8 +13,11 @@ RUN npm ci
 COPY --chown=node:node ./nest .
 RUN npx prisma generate
 
+
 # alternate client generation script
 COPY --chown=node:node ./nest/prisma/.prisma/client_aero /usr/src/app/node_modules/.prisma/client_aero
+COPY --chown=node:node ./nest/prisma/.prisma/client_limited /usr/src/app/node_modules/.prisma/client_limited
+COPY --chown=node:node ./nest/prisma/.prisma/client_ndow /usr/src/app/node_modules/.prisma/client_ndow
 
 RUN npm run build 
 
