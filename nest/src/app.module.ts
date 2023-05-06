@@ -16,10 +16,11 @@ import { TblSchemaModule } from './tbl-schema/tbl-schema.module';
 
 import { ConfigModule } from '@nestjs/config';
 
-import { AuthModule } from './auth/auth.module';
 import { AerosummaryModule } from './aerosummary/aerosummary.module';
 
 // import { CognitoAuthModule } from "@nestjs-cognito/auth";
+import { TokenService } from './token/token.service';
+import { PrismahelperService } from './prismahelper/prismahelper.service';
 
 @Module({
   imports: [
@@ -35,7 +36,6 @@ import { AerosummaryModule } from './aerosummary/aerosummary.module';
     DatadustdepositionModule,
     DatahorizontalfluxModule,
     TblSchemaModule,
-    AuthModule,
     ConfigModule.forRoot(),
     AerosummaryModule,
     // CognitoAuthModule.register({
@@ -47,6 +47,6 @@ import { AerosummaryModule } from './aerosummary/aerosummary.module';
     // })
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, TokenService, PrismahelperService],
 })
 export class AppModule {}

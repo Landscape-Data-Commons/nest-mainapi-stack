@@ -13,19 +13,15 @@ import { DataheaderService } from './dataheader.service';
 import { dtoDataHeader } from './dto/get-dataheader.dto';
 import { DataheaderEnt } from './entities/dataheader.entity';
 
-import { CognitoJwtVerifier } from 'aws-jwt-verify';
 import { Request as ExpRequest } from 'express';
-import { NDOW_CLIENT, LIMITED_CLIENT } from 'src/ClientSwitch.constants';
+import { TokenService } from 'src/token/token.service';
 
 @Controller('dataheader')
 export class DataheaderController {
-  private jwtVerifier = CognitoJwtVerifier.create({
-    userPoolId: 'us-west-1_FgaW15JOh',
-    tokenUse: 'id',
-    clientId: '3ocfhcl3smtnnu6m0qkne8v8tg',
-  });
-
-  constructor(private readonly dataheaderService: DataheaderService) {}
+  constructor(
+    private readonly dataheaderService: DataheaderService,
+    private tokenService: TokenService,
+  ) {}
 
   @Get()
   @ApiOkResponse({ type: DataheaderEnt, isArray: true })
@@ -40,68 +36,13 @@ export class DataheaderController {
 
     @CustomRequestObjHandler(dtoDataHeader) ValidatedParams?: dtoDataHeader,
   ) {
-    if (headers.hasOwnProperty('authorization')) {
-      const token = this.extractTokenFromHeader(request);
-      let result: any;
-      try {
-        result = await this.jwtVerifier.verify(token)
-      } catch (error) {
-        result = {}
-      }
-      if (typeof result === 'object' && result.hasOwnProperty('identities')) {
-        if (take) {
-          ValidatedParams['take'] = Number(take);
-        }
-        if (cursor) {
-          ValidatedParams['cursor'] = Number(cursor);
-        }
-        for (const [key, value] of Object.entries(ValidatedParams['params'])) {
-          if (Array.isArray(value) && key != 'take' && key != 'cursor') {
-            ValidatedParams['params'][key] = { in: value };
-          }
-        }
-        console.log;
-        return this.dataheaderService.FindManyHeader(
-          ValidatedParams,
-          NDOW_CLIENT,
-        );
-        // return JSON.stringify('VALID TOKEN: FULL RESULTS');
-      } else {
-        // return JSON.stringify('INVALID TOKEN: UNAUTHORIZED OR LIMITED SET');
-        return new UnauthorizedException();
-      }
-      // if (take) {
-      //   ValidatedParams['take'] = Number(take);
-      // }
-      // if (cursor) {
-      //   ValidatedParams['cursor'] = Number(cursor);
-      // }
-      // for (const [key, value] of Object.entries(ValidatedParams['params'])) {
-      //   if (Array.isArray(value) && key != 'take' && key != 'cursor') {
-      //     ValidatedParams['params'][key] = { in: value };
-      //   }
-      // }
-      // return this.dataheaderService.FindManyHeader(ValidatedParams);
-    } else {
-      if (take) {
-        ValidatedParams['take'] = Number(take);
-      }
-      if (cursor) {
-        ValidatedParams['cursor'] = Number(cursor);
-      }
-      for (const [key, value] of Object.entries(ValidatedParams['params'])) {
-        if (Array.isArray(value) && key != 'take' && key != 'cursor') {
-          ValidatedParams['params'][key] = { in: value };
-        }
-      }
-      return this.dataheaderService.FindManyHeader(
-        ValidatedParams,
-        LIMITED_CLIENT,
-      );
-    }
-  }
-  private extractTokenFromHeader(request: ExpRequest): string | undefined {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
+    return this.tokenService.validateRequest(
+      headers,
+      request,
+      this.dataheaderService,
+      take,
+      cursor,
+      ValidatedParams,
+    );
   }
 }

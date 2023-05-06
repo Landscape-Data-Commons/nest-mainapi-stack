@@ -1,37 +1,41 @@
-import { Controller, Get, Query } from '@nestjs/common';
-import { ApiBody, ApiExtraModels, ApiOkResponse, ApiParam, ApiQuery } from '@nestjs/swagger';
+import { Controller, Get, Query, Headers, Request } from '@nestjs/common';
+import { ApiOkResponse, ApiParam, ApiQuery } from '@nestjs/swagger';
 
 import { CustomRequestObjHandler } from '../CustomRequest.decorator';
 import { DatahorizontalfluxService } from './datahorizontalflux.service';
 import { dtoDataHorizontalFlux } from './dto/get-datahorizontalflux.dto';
 import { DatahorizontalfluxEnt } from './entities/datahorizontalflux.entity';
 
+import { Request as ExpRequest } from 'express';
+import { TokenService } from 'src/token/token.service';
+
 @Controller('datahorizontalflux')
 export class DatahorizontalfluxController {
-  constructor(private readonly datahorizontalfluxService: DatahorizontalfluxService) {}
+  constructor(
+    private readonly datahorizontalfluxService: DatahorizontalfluxService,
+    private tokenService: TokenService,
+    ) {}
 
   @Get()
   @ApiOkResponse({ type: DatahorizontalfluxEnt, isArray: true })
 
   GetHorizontalFlux(
+    @Headers() headers: Headers,
+    @Request() request: ExpRequest,
     // pagination
     @Query('take') take?: string,
     @Query('cursor') cursor?: string,
 
     @CustomRequestObjHandler(dtoDataHorizontalFlux) ValidatedParams?: DatahorizontalfluxEnt,
   ) {
-    if (take) {
-      ValidatedParams['take'] = Number(take);
-    }
-    if (cursor) {
-      ValidatedParams['cursor'] = Number(cursor);
-    }
-    for (const [key, value] of Object.entries(ValidatedParams['params'])) {
-      if (Array.isArray(value) && key != 'take' && key != 'cursor') {
-        ValidatedParams['params'][key] = { in: value };
-      }
-    }
-    return this.datahorizontalfluxService.FindManyHorizontalFlux(ValidatedParams);
+    return this.tokenService.validateRequest(
+      headers,
+      request,
+      this.datahorizontalfluxService,
+      take,
+      cursor,
+      ValidatedParams,
+    );
   }
 
 }
