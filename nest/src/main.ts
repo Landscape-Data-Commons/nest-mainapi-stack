@@ -6,6 +6,7 @@ import { NestFastifyApplication } from '@nestjs/platform-fastify';
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule);
   app.setGlobalPrefix('api/v1', { exclude: ['/'] });
+  app.enableCors()
 
   const config = new DocumentBuilder()
     .setTitle('LDC Tall Table Api')
