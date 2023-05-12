@@ -2,6 +2,8 @@
 
 ## to enable switching between different postgres connection clients:
 1. create copies of `schema.prisma` file for each pgclient
+2. `npx prisma db pull --schema=%SCHEMA%` / `npx prisma generate --schema=%SCHEMA%` (substitute `%SCHEMA%` with the path of the prisma schema file of your choice)
+3. add generated schema files to the prisma client service class (in the constructor of a custom client class, and extended client service class)
 
 ## todo:
 - public/authorized authguard resources, making it optional like express/next():

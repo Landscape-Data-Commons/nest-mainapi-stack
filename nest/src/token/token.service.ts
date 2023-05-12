@@ -43,6 +43,7 @@ export class TokenService {
             postDecoratorParams['params'][key] = { in: value };
           }
         }
+
         return tableService.FindMany(postDecoratorParams, NDOW_CLIENT);
       } else {
         return new UnauthorizedException();

@@ -18,11 +18,11 @@ export class AerosummaryService {
   FindMany(params: any, client?: any): Promise<AeroSummary[] | null> {
     const { ...whereParams } = params['params'];
     const { take, cursor } = params;
-
+    
     this.chosenClient = this.prismaHelper.ClientSwitch(AERO_CLIENT);
 
     return this.prismaHelper.paramHandler(
-      this.chosenClient.Aero_summary,
+      this.chosenClient.aero_summary,
       whereParams,
       take,
       cursor,

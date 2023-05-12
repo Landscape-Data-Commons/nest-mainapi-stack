@@ -21,6 +21,7 @@ import { AerosummaryModule } from './aerosummary/aerosummary.module';
 // import { CognitoAuthModule } from "@nestjs-cognito/auth";
 import { TokenService } from './token/token.service';
 import { PrismahelperService } from './prismahelper/prismahelper.service';
+import { GroupmiddlewareService } from './groupmiddleware/groupmiddleware.service';
 
 @Module({
   imports: [
@@ -47,6 +48,6 @@ import { PrismahelperService } from './prismahelper/prismahelper.service';
     // })
   ],
   controllers: [AppController],
-  providers: [AppService, TokenService, PrismahelperService],
+  providers: [AppService, TokenService, PrismahelperService, GroupmiddlewareService],
 })
 export class AppModule {}

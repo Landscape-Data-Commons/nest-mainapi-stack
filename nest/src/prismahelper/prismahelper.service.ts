@@ -1,5 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { AERO_CLIENT, LIMITED_CLIENT, NDOW_CLIENT } from 'src/ClientSwitch.constants';
+import {
+  AERO_CLIENT,
+  LIMITED_CLIENT,
+  NDOW_CLIENT,
+} from 'src/ClientSwitch.constants';
 import { LikeOperator } from 'src/CustomRequest.decorator';
 import { PrismaService } from 'src/prisma/prisma.service';
 

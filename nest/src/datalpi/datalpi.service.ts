@@ -7,10 +7,7 @@ import { PrismahelperService } from 'src/prismahelper/prismahelper.service';
 export class DatalpiService {
   chosenClient: any;
 
-  constructor(
-    public prisma: PrismaService,
-    private prismaHelper: PrismahelperService,
-  ) {}
+  constructor(private prismaHelper: PrismahelperService) {}
 
   FindMany(params?: any, client?: any): Promise<dataLPI[] | null> {
     const { ...whereParams } = params['params'];
