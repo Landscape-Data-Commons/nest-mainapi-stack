@@ -7,6 +7,8 @@ import {
 import { LikeOperator } from 'src/CustomRequest.decorator';
 import { PrismaService } from 'src/prisma/prisma.service';
 
+import { Readable } from 'stream';
+
 @Injectable()
 export class PrismahelperService {
   constructor(public prisma: PrismaService) {}
@@ -59,13 +61,43 @@ export class PrismahelperService {
         });
       } else {
         console.log('nolike: no cursor');
-        return chosenClient.findMany({
-          where: { ...whereParams },
-          take,
-          orderBy: {
-            rid: 'asc',
+
+        // KBF 05/18/2023: returning readable stream instead of single client instance
+        return new Readable({
+          objectMode: true,
+          // highWaterMark: take,
+          async read() {
+            try {
+              const items = await chosenClient.findMany({
+                where: { ...whereParams },
+                take,
+                orderBy: {
+                  rid: 'asc',
+                },
+              });
+              if (items.length === 0) {
+                this.push(null);
+              } else {
+                for (const item of items) {
+                  this.push(item);
+                }
+              }
+              cursor = items[items.length - 1].id;
+            } catch (err) {
+              this.destroy(err);
+            }
           },
         });
+
+        // KBF 05/18/2023: default single client response 
+
+        // return chosenClient.findMany({
+        //   where: { ...whereParams },
+        //   take,
+        //   orderBy: {
+        //     rid: 'asc',
+        //   },
+        // });
       }
     }
   }
