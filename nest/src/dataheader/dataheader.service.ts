@@ -10,7 +10,7 @@ import fs from 'fs';
 @Injectable()
 export class DataheaderService {
   chosenClient: any;
-  
+
 
   constructor(
     public prisma: PrismaService,
@@ -27,22 +27,22 @@ export class DataheaderService {
     this.chosenClient = this.prismaHelper.ClientSwitch(client);
     
     // KBF 05/18/2023: async iterator for Readable stream
-    for await (const result of this.prismaHelper.paramHandler(
-      this.chosenClient.dataHeader,
-      whereParams,
-      take,
-      cursor,
-      params,
-    )){
-      return result
-    }
-    // KBF 05/18/2023: default single json response 
-    // return this.prismaHelper.paramHandler(
-    //   this.chosenClient.dataLPI,
+    // for await (const result of this.prismaHelper.paramHandler(
+    //   this.chosenClient.dataHeader,
     //   whereParams,
     //   take,
     //   cursor,
     //   params,
-    // );
+    // )){
+    //   return result
+    // }
+    // KBF 05/18/2023: default single json response 
+    return this.prismaHelper.paramHandler(
+      this.chosenClient.dataLPI,
+      whereParams,
+      take,
+      cursor,
+      params,
+    );
   }
 }

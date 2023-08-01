@@ -6,9 +6,11 @@ import { NDOW_CLIENT, LIMITED_CLIENT } from 'src/ClientSwitch.constants';
 @Injectable()
 export class TokenService {
   private jwtVerifier = CognitoJwtVerifier.create({
-    userPoolId: 'us-west-1_FgaW15JOh',
+    // userPoolId: 'us-west-1_FgaW15JOh',
+    userPoolId: 'us-east-1_x2q4CazBi', //sarah user pool
     tokenUse: 'id',
-    clientId: '3ocfhcl3smtnnu6m0qkne8v8tg',
+    // clientId: '3ocfhcl3smtnnu6m0qkne8v8tg',
+    clientId: '6nui6oqeilk6vknb8fjr1t6mvp', //sarah user pool
   });
 
   public async validateRequest(

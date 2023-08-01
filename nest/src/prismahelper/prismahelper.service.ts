@@ -47,7 +47,7 @@ export class PrismahelperService {
       }
     } else {
       if (!isNaN(take) && !isNaN(cursor)) {
-        console.log('nolike: with cursor');
+        console.log('nolike: with cursor ');
         return chosenClient.findMany({
           where: { ...whereParams },
           skip: 1,
@@ -65,7 +65,7 @@ export class PrismahelperService {
         // KBF 05/18/2023: returning readable stream instead of single client instance
         return new Readable({
           objectMode: true,
-          // highWaterMark: take,
+          highWaterMark: take,
           async read() {
             try {
               const items = await chosenClient.findMany({

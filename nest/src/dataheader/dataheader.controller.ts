@@ -5,6 +5,7 @@ import {
   Headers,
   Request,
   UnauthorizedException,
+  ConsoleLogger,
 } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 
@@ -36,6 +37,30 @@ export class DataheaderController {
 
     @CustomRequestObjHandler(dtoDataHeader) ValidatedParams?: dtoDataHeader,
   ) {
+
+    //  async iterator 
+    const stream = this.tokenService.validateRequest(
+      headers,
+      request,
+      this.dataheaderService,
+      take,
+      cursor,
+      ValidatedParams,
+    );
+    for await (const entity of [stream]){ 
+      // return entity;
+    }
+    // for await (const item of this.tokenService.validateRequest(
+    //   headers,
+    //   request,
+    //   this.dataheaderService,
+    //   take,
+    //   cursor,
+    //   ValidatedParams,
+    // )){
+    //   return item;
+    // }
+    //  default single json
     return this.tokenService.validateRequest(
       headers,
       request,
