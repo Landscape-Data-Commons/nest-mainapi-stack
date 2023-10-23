@@ -63,41 +63,44 @@ export class PrismahelperService {
         console.log('nolike: no cursor');
 
         // KBF 05/18/2023: returning readable stream instead of single client instance
-        return new Readable({
-          objectMode: true,
-          highWaterMark: take,
-          async read() {
-            try {
-              const items = await chosenClient.findMany({
-                where: { ...whereParams },
-                take,
-                orderBy: {
-                  rid: 'asc',
-                },
-              });
-              if (items.length === 0) {
-                this.push(null);
-              } else {
-                for (const item of items) {
-                  this.push(item);
-                }
-              }
-              cursor = items[items.length - 1].id;
-            } catch (err) {
-              this.destroy(err);
-            }
-          },
-        });
+        // return new Readable({
+        //   objectMode: true,
+        //   highWaterMark: take,
+        //   async read() {
+        //     try {
+        //       const items = await chosenClient.findMany({
+        //         where: { ...whereParams },
+        //         take,
+        //         orderBy: {
+        //           rid: 'asc',
+        //         },
+        //       });
+        //       if (items.length === 0) {
+        //         this.push(null);
+        //       } else {
+        //         for (const item of items) {
+        //           this.push(item);
+        //         }
+        //       }
+        //       cursor = items[items.length - 1].id;
+        //     } catch (err) {
+        //       this.destroy(err);
+        //     }
+        //   },
+        // });
 
         // KBF 05/18/2023: default single client response 
 
-        // return chosenClient.findMany({
-        //   where: { ...whereParams },
-        //   take,
-        //   orderBy: {
-        //     rid: 'asc',
-        //   },
-        // });
+        return chosenClient.findMany({
+          where: { ...whereParams },
+          take,
+          // cursor: {
+          //   rid: cursor,
+          // },
+          orderBy: {
+            rid: 'asc',
+          },
+        });
       }
     }
   }
