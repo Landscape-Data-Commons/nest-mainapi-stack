@@ -1,19 +1,19 @@
 version: "3.3"
 services:
   nest:
-    image: landscapedatacommons/nest_api:1.1.0
+    image: landscapedatacommons/nest_api:1.1.1
     build:
       context: ./nest
       dockerfile: node.Dockerfile
     ports:
-      - "5016:3000"
+      - "5017:3000"
     env_file:
       - ./nest/.env
 
-    # deploy:
-    #   replicas: 3
-    #   update_config:
-    #     parallelism: 2
-    #     delay: 10s
-    #   restart_policy: 
-    #     condition: on-failure
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy: 
+        condition: on-failure

@@ -35,8 +35,7 @@ export class TokenService {
       // si es valido
       // console.log(result)
 
-      if (typeof result === 'object' ) {
-
+      if (typeof result === 'object') {
         if (take) {
           postDecoratorParams['take'] = Number(take);
         }
@@ -77,25 +76,25 @@ export class TokenService {
     return type === 'Bearer' ? token : undefined;
   }
 
-  private groupDiscrimination(JWTResponse, service, params){
-    const res = JWTResponse
-    if(res==undefined){
-      console.log("no hay permiso: limited client")
+  private groupDiscrimination(JWTResponse, service, params) {
+    const res = JWTResponse;
+    if (res == undefined) {
+      console.log('no hay permiso: limited client');
       return service.FindMany(params, LIMITED_CLIENT);
     }
-    if (res.hasOwnProperty("cognito:groups")){
-      console.log("it found a group")
+    if (res.hasOwnProperty('cognito:groups')) {
+      console.log('it found a group');
       const [grp] = res['cognito:groups'];
-      switch(grp){
+      switch (grp) {
         case 'NDOW':
-          console.log("NDOW")
+          console.log('NDOW');
           return service.FindMany(params, NDOW_CLIENT);
         default:
-          console.log("but group not NDOW")
+          console.log('but group not NDOW');
           return service.FindMany(params, LIMITED_CLIENT);
       }
     } else {
-      console.log("no group found")
+      console.log('no group found');
       return service.FindMany(params, LIMITED_CLIENT);
     }
   }
