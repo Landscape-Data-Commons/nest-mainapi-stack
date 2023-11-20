@@ -13,7 +13,7 @@ export class TokenService {
     tokenUse: 'id',
     // clientId: '3ocfhcl3smtnnu6m0qkne8v8tg',
     // clientId: '6nui6oqeilk6vknb8fjr1t6mvp', //sarah user pool
-    clientId: '4tg52khr93thha203s2h7j02pt'
+    clientId: '4tg52khr93thha203s2h7j02pt',
   });
 
   public async validateRequest(
