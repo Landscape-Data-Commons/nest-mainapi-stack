@@ -80,6 +80,7 @@ export class TokenService {
 
   private groupDiscrimination(JWTResponse, service, params) {
     const res = JWTResponse;
+    console.log(res)
     if (res == undefined) {
       console.log('no hay permiso: limited client');
       return service.FindMany(params, LIMITED_CLIENT);
