@@ -8,10 +8,12 @@ export class TokenService {
   // public stored_result: any;
   private jwtVerifier = CognitoJwtVerifier.create({
     // userPoolId: 'us-west-1_FgaW15JOh',
-    userPoolId: 'us-east-1_x2q4CazBi', //sarah user pool
+    // userPoolId: 'us-east-1_x2q4CazBi', //sarah user pool
+    userPoolId: 'us-east-1_Rc6dMvxPD',
     tokenUse: 'id',
     // clientId: '3ocfhcl3smtnnu6m0qkne8v8tg',
-    clientId: '6nui6oqeilk6vknb8fjr1t6mvp', //sarah user pool
+    // clientId: '6nui6oqeilk6vknb8fjr1t6mvp', //sarah user pool
+    clientId: '4tg52khr93thha203s2h7j02pt'
   });
 
   public async validateRequest(
